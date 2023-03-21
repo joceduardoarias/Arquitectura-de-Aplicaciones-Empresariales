@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Pacagroup.Ecommerce.Domain.Entity;
 
 namespace Pacagroup.Ecommerce.Infraestructura.Interface
@@ -16,11 +17,11 @@ namespace Pacagroup.Ecommerce.Infraestructura.Interface
         #endregion
         
         #region "Metodos Asincronos"
-        IEnumerable<Customers> GetCustomersAsync();
-        Customers GetCustomerAsync(string customerId);
-        bool InsertCustomerAsync(Customers customer);
-        bool UpdateCustomerAsync(Customers customer);
-        bool DeleteCustomerAsync(string customerId);
+        Task<IEnumerable<Customers>> GetCustomersAsync();
+        Task<Customers> GetCustomerAsync(string customerId);
+        Task<bool> InsertCustomerAsync(Customers customer);
+        Task<bool> UpdateCustomerAsync(Customers customer);
+        Task<bool> DeleteCustomerAsync(string customerId);
         #endregion
         
     }
