@@ -23,6 +23,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             {
                 var query = "CustomersDelete";
                 var parameters = new DynamicParameters();
+                parameters.Add("CustomerID", customerId);
                 var rs = connection.Execute(query, param: parameters, commandType: CommandType.StoredProcedure);
                 return rs > 0;
             }
@@ -34,6 +35,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             {
                 var query = "CustomersDelete";
                 var parameters = new DynamicParameters();
+                parameters.Add("CustomerID", customerId);
                 var rs = await connection.ExecuteAsync(query, param: parameters, commandType: CommandType.StoredProcedure);
                 return rs > 0;
             }
