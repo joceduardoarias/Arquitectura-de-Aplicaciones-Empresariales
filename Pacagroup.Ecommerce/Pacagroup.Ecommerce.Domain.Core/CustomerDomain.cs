@@ -37,9 +37,9 @@ namespace Pacagroup.Ecommerce.Domain.Core
             return _customersRepository.GetCustomers();
         }
 
-        public Task<IEnumerable<Customers>> GetCustomersAsync()
+        public async Task<IEnumerable<Customers>> GetCustomersAsync()
         {
-            return _customersRepository.GetCustomersAsync();
+            return await _customersRepository.GetCustomersAsync();
         }
 
         public bool InsertCustomer(Customers customer)
@@ -47,9 +47,9 @@ namespace Pacagroup.Ecommerce.Domain.Core
             return _customersRepository.InsertCustomer(customer);
         }
 
-        public Task<bool> InsertCustomerAsync(Customers customer)
+        public async Task<bool> InsertCustomerAsync(Customers customer)
         {
-            return _customersRepository.InsertCustomerAsync(customer);
+            return await _customersRepository.InsertCustomerAsync(customer);
         }
 
         public bool UpdateCustomer(Customers customer)
@@ -57,9 +57,9 @@ namespace Pacagroup.Ecommerce.Domain.Core
             return _customersRepository.UpdateCustomer(customer);
         }
 
-        public Task<bool> UpdateCustomerAsync(Customers customer)
+        public async Task<bool> UpdateCustomerAsync(Customers customer)
         {
-            return _customersRepository.UpdateCustomerAsync(customer);
+            return await _customersRepository.UpdateCustomerAsync(customer);
         }
     }
 }
