@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : Controller
     {
@@ -18,19 +18,19 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         }
 
         #region Metodos Sincronos
-        [HttpGet]
+        [HttpGet("GetCustomers")]
         public IActionResult GetCustomers()
         {
             var customers = _customerApplication.GetCustomers();
             return Ok(customers);
         }
-        [HttpGet("{id}")]
+        [HttpGet("GetCustomer/{id}")]
         public IActionResult GetCustomer(string id)
         {
             var customer = _customerApplication.GetCustomer(id);
             return Ok(customer);
         }
-        [HttpPost]
+        [HttpPost("InsertCustomer")]
         public IActionResult InsertCustomer([FromBody] CustomersDto customerDTO)
         {
             if (!ModelState.IsValid)
@@ -47,7 +47,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateCustomer")]
         public IActionResult UpdateCustomer([FromBody] CustomersDto customerDTO)
         {
             if (!ModelState.IsValid)
@@ -64,7 +64,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteCustomer/{id}")]
         public IActionResult DeleteCustomer(string id)
         {
             if (!ModelState.IsValid)
@@ -84,7 +84,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         #endregion
         
         #region Metodos Asincronos
-        [HttpGet]
+        [HttpGet("GetAllAsync")]
         public async Task<IActionResult> GetCustomersAsync()
         {
             var customers = await _customerApplication.GetCustomersAsync();
