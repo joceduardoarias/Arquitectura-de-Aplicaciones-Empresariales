@@ -1,10 +1,10 @@
 ﻿using System;
 using AutoMapper;
 using Pacagroup.Ecommerce.Application.DTO;
-using Pacagroup.Ecommerce.Domain.Interface;
-using Pacagroup.Ecommerce.Transversal.Common;
-using Pacagroup.Ecommerce.Domain.Entity;
 using Pacagroup.Ecommerce.Application.Interface;
+using Pacagroup.Ecommerce.Domain.Interface;
+using Pacagroup.Ecommerce.Domain.Entity;
+using Pacagroup.Ecommerce.Transversal.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
@@ -68,6 +68,11 @@ namespace Pacagroup.Ecommerce.Application.Main
             try
             {
                 response.Data = _mapper.Map<CustomersDto>(_customerDomain.GetCustomer(customerId));
+                if (response.Data != null)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Success";
+                }
             }
             catch (Exception ex)
             {
@@ -77,9 +82,24 @@ namespace Pacagroup.Ecommerce.Application.Main
             return response;
         }
 
-        public Task<Response<CustomersDto>> GetCustomerAsync(string customerId)
-        {
-            throw new NotImplementedException();
+        public async Task<Response<CustomersDto>> GetCustomerAsync(string customerId)
+        {   
+            var response = new Response<CustomersDto>();
+            try
+            {
+                response.Data = _mapper.Map<CustomersDto>(await _customerDomain.GetCustomerAsync(customerId));
+                if (response.Data != null)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
         public Response<IEnumerable<CustomersDto>> GetCustomers()
@@ -103,29 +123,108 @@ namespace Pacagroup.Ecommerce.Application.Main
             return response;
         }
 
-        public Task<Response<IEnumerable<CustomersDto>>> GetCustomersAsync()
-        {
-            throw new NotImplementedException();
+        public async Task<Response<IEnumerable<CustomersDto>>> GetCustomersAsync()
+        {   
+            var response = new Response<IEnumerable<CustomersDto>>();
+            try
+            {
+                response.Data = _mapper.Map<IEnumerable<CustomersDto>>(await _customerDomain.GetCustomersAsync());
+                if (response.Data.Any())
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Response<bool> InsertCustomer(CustomersDto customer)
-        {
-            throw new NotImplementedException();
+        public Response<bool> InsertCustomer(CustomersDto customerDTO)
+        {   
+            var response = new Response<bool>();
+            try
+            {
+                var customerEntity = _mapper.Map<Customers>(customerDTO);
+                response.Data = _customerDomain.InsertCustomer(customerEntity);
+                if (response.Data)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<Response<bool>> InsertCustomerAsync(CustomersDto customer)
-        {
-            throw new NotImplementedException();
+        public async Task<Response<bool>> InsertCustomerAsync(CustomersDto customerDTO)
+        {   
+            var response = new Response<bool>();
+            try
+            {
+                var customerEntity = _mapper.Map<Customers>(customerDTO);
+                response.Data = await _customerDomain.InsertCustomerAsync(customerEntity);
+                if (response.Data)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Response<bool> UpdateCustomer(CustomersDto customer)
-        {
-            throw new NotImplementedException();
+        public Response<bool> UpdateCustomer(CustomersDto customerDTO)
+        {   
+            var response = new Response<bool>();
+            try
+            {
+                var customerEntity = _mapper.Map<Customers>(customerDTO);
+                response.Data = _customerDomain.UpdateCustomer(customerEntity);
+                if (response.Data)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<Response<bool>> UpdateCustomerAsync(CustomersDto customer)
-        {
-            throw new NotImplementedException();
+        public async Task<Response<bool>> UpdateCustomerAsync(CustomersDto customerDTO)
+        {   
+            var response = new Response<bool>();
+            try
+            {
+                var customerEntity = _mapper.Map<Customers>(customerDTO);
+                 response.Data = await _customerDomain.UpdateCustomerAsync(customerEntity);
+                if (response.Data)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Success";
+                }
+            }
+                catch (Exception ex)
+            {
+                 response.IsSuccess = false;
+                 response.Message = ex.Message;
+            }
+            return response;
         }
     }
 }
