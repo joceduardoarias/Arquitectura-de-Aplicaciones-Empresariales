@@ -84,19 +84,19 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         #endregion
         
         #region Metodos Asincronos
-        [HttpGet("GetAllAsync")]
+        [HttpGet("GetCustomersAsync")]
         public async Task<IActionResult> GetCustomersAsync()
         {
             var customers = await _customerApplication.GetCustomersAsync();
             return Ok(customers);
         }
-        [HttpGet("{id}")]
+        [HttpGet("GetCustomerAsync/{id}")]
         public async Task<IActionResult> GetCustomerAsync(string id)
         {
             var customer = await _customerApplication.GetCustomerAsync(id);
             return Ok(customer);
         }
-        [HttpPost]
+        [HttpPost("InsertCustomerAsync")]
         public async Task<IActionResult> InsertCustomerAsync([FromBody] CustomersDto customerDTO)
         {
             if (!ModelState.IsValid)
@@ -113,7 +113,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateCustomerAsync")]
         public async Task<IActionResult> UpdateCustomerAsync([FromBody] CustomersDto customerDTO)
         {
             if (!ModelState.IsValid)
@@ -130,7 +130,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteCustomerAsync/{id}")]
         public async Task<IActionResult> DeleteCustomerAsync(string id)
         {
             if (!ModelState.IsValid)
