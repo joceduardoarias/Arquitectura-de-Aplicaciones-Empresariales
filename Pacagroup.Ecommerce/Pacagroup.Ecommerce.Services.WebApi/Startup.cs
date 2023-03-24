@@ -21,6 +21,10 @@ using Pacagroup.Ecommerce.Application.Interface;
 using Pacagroup.Ecommerce.Application.Main;
 using Newtonsoft.Json.Serialization;
 using System.Runtime.InteropServices;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
+using System.IO;
+using System.Reflection;
 
 namespace Pacagroup.Ecommerce.Services.WebApi
 {
@@ -54,6 +58,21 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             services.AddSingleton<ICustomerApplication, CustomerApplication>();
             services.AddSingleton<ICustomerDomain, CustomerDomain>();
             services.AddSingleton<ICustomersRepository, CustomerRepository>();                        
+            
+            // Register the swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                { 
+                    Title = "Service API Market", 
+                    Description = "A simple example ASP.NET Core web API", 
+                    Version = "v1" 
+                });
+                // Set the comments path for the swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +82,14 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
+            app.UseSwagger();
+            
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+            
             app.UseRouting();
 
             app.UseAuthorization();
