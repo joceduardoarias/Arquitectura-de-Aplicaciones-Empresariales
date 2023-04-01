@@ -25,6 +25,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Reflection;
+using Pacagroup.Ecommerce.Services.WebApi.Helpers;
+using Pacagroup.Ecommerce.Infraestructure.Interface;
 
 namespace Pacagroup.Ecommerce.Services.WebApi
 {
@@ -57,13 +59,18 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
+            //Mapear la configuración de los valores de la sección config en el appSetting.json
+            services.Configure<AppSettings>(Configuration.GetSection("Config"));
 
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IConnectionFactory, ConnectionFactory>();
-            services.AddSingleton<ICustomerApplication, CustomerApplication>();
-            services.AddSingleton<ICustomerDomain, CustomerDomain>();
-            services.AddSingleton<ICustomersRepository, CustomerRepository>();                        
-            
+            services.AddScoped<ICustomerApplication, CustomerApplication>();
+            services.AddScoped<ICustomerDomain, CustomerDomain>();
+            services.AddScoped<ICustomersRepository, CustomerRepository>();                        
+            services.AddScoped<IUsersApplication, UsersApplication>();
+            services.AddScoped<IUsersDomain, UsersDomain>();
+            services.AddScoped<IUsersRepository, UserRepository>();
+
             // Register the swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -89,13 +96,15 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             }
             
             app.UseSwagger();
-            
+                        
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
             app.UseCors(myPolicy);
+            
+            app.UseAuthentication();
 
             app.UseRouting();
 
