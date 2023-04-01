@@ -29,7 +29,8 @@ using System.Reflection;
 namespace Pacagroup.Ecommerce.Services.WebApi
 {
     public class Startup
-    {
+    {   
+        readonly string myPolicy = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -47,6 +48,10 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+            
+            services.AddCors(options => options.AddPolicy(myPolicy,builder => builder.WithOrigins(Configuration["Config:OriginCors"])
+            .AllowAnyHeader()
+            .AllowAnyMethod()));
 
             services.AddControllers().AddNewtonsoftJson(options =>
             {
@@ -89,7 +94,9 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-            
+
+            app.UseCors(myPolicy);
+
             app.UseRouting();
 
             app.UseAuthorization();
