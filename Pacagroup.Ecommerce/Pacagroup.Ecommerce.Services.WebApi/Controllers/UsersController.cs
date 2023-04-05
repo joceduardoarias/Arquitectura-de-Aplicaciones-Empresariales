@@ -46,9 +46,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
             return BadRequest(response.Message);              
         }
         private string BuildToken(Response<UsersDTO> usersDTO)
-        {
-            _appSettings.Secret = GenerateRandomString(64);
-
+        {            
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -65,15 +63,6 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
             return tokenString;
-        }
-        static string GenerateRandomString(int length)
-        {
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                var bytes = new byte[length];
-                rng.GetBytes(bytes);
-                return Convert.ToBase64String(bytes);
-            }
-        }
+        }       
     }
 }
