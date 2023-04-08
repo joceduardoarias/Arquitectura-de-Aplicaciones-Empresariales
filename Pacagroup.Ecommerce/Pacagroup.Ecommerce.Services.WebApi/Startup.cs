@@ -29,6 +29,7 @@ using Pacagroup.Ecommerce.Services.WebApi.Helpers;
 using Pacagroup.Ecommerce.Infraestructure.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Pacagroup.Ecommerce.Transversal.Logging;
 
 namespace Pacagroup.Ecommerce.Services.WebApi
 {
@@ -73,6 +74,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             services.AddScoped<IUsersApplication, UsersApplication>();
             services.AddScoped<IUsersDomain, UsersDomain>();
             services.AddScoped<IUsersRepository, UserRepository>();
+            services.AddScoped(typeof(IloggerApp<>), typeof(LoggerAdapter<>));
 
             //Configure JWT Authentication
             var appSettings = appSettingsSection.Get<AppSettings>();

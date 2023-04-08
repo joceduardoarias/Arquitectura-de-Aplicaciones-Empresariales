@@ -15,11 +15,12 @@ namespace Pacagroup.Ecommerce.Application.Main
     {
         private readonly ICustomerDomain _customerDomain;
         private readonly IMapper _mapper;
-        
-        public CustomerApplication(ICustomerDomain customerDomain, IMapper mapper)
+        private readonly IloggerApp<CustomerApplication> _logger;
+        public CustomerApplication(ICustomerDomain customerDomain, IMapper mapper, IloggerApp<CustomerApplication> logger)
         {
             _customerDomain = customerDomain;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public Response<bool> DeleteCustomer(string customerId)
@@ -32,12 +33,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
+                    _logger.LogInformation("Customer borrado correctamente");
                 }
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }
@@ -72,12 +75,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
+                    _logger.LogInformation("Customer obtenido correctamente");
                 }
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }
@@ -92,12 +97,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
+                    _logger.LogInformation("Customer obtenido correctamente");
                 }
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }
@@ -113,12 +120,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
+                    _logger.LogInformation("Customers obtenidos correctamente");
                 }
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }
@@ -133,12 +142,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
+                    _logger.LogInformation("Customers obtenidos correctamente");
                 }
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }
@@ -154,12 +165,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
+                    _logger.LogInformation("Customer insertado correctamente");
                 }
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }
@@ -175,12 +188,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
+                    _logger.LogInformation("Customer insertado correctamente"); 
                 }
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }
@@ -196,12 +211,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
+                    _logger.LogInformation("Customer actualizado correctamente");
                 }
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }
@@ -217,12 +234,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
+                    _logger.LogInformation("Customer actualizado correctamente");
                 }
             }
                 catch (Exception ex)
             {
                  response.IsSuccess = false;
                  response.Message = ex.Message;
+                    _logger.LogError(ex.Message);
             }
             return response;
         }

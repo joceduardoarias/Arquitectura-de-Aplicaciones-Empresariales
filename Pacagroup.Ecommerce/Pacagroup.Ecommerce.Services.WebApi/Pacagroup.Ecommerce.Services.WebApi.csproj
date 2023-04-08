@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Pacagroup.Ecommerce.Infraestructure.Data\Pacagroup.Ecommerce.Infraestructure.Data.csproj" />
     <ProjectReference Include="..\Pacagroup.Ecommerce.Infraestructure.Repository\Pacagroup.Ecommerce.Infraestructure.Repository.csproj" />
     <ProjectReference Include="..\Pacagroup.Ecommerce.Transversal.Common\Pacagroup.Ecommerce.Transversal.Common.csproj" />
+    <ProjectReference Include="..\Pacagroup.Ecommerce.Transversal.Logging\Pacagroup.Ecommerce.Transversal.Logging.csproj" />
     <ProjectReference Include="..\Pacagroup.Ecommerce.Transversal.Mapper\Pacagroup.Ecommerce.Transversal.Mapper.csproj" />
   </ItemGroup>
 
