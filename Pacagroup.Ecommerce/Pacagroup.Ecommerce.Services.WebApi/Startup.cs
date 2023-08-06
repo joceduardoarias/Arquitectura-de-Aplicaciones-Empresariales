@@ -9,6 +9,7 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Mapper;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Feature;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Injection;
+using Pacagroup.Ecommerce.Services.WebApi.Modules.Validator;
 
 namespace Pacagroup.Ecommerce.Services.WebApi
 {
@@ -35,6 +36,8 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             services.AddAuthentication(Configuration);
             // Register the swagger generator, defining 1 or more Swagger documents
             services.AddSwagger();
+            // Configure Validators
+            services.AddValidator();
 
             services.AddControllers().AddNewtonsoftJson(options =>
             {
