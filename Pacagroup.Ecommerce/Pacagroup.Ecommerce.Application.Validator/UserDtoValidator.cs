@@ -6,8 +6,8 @@ namespace Pacagroup.Ecommerce.Application.Validator
 {
     public class UserDtoValidator : AbstractValidator<UsersDTO>
     {
-        public UserDtoValidator() 
-        { 
+        public UserDtoValidator()
+        {
             RuleFor(u => u.UserName).NotNull().NotEmpty();
             RuleFor(u => u.Password).NotNull().NotEmpty();
         }
