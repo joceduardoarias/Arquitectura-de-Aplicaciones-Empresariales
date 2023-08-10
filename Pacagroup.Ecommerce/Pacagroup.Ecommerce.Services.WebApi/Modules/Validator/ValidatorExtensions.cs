@@ -8,7 +8,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Modules.Validator
     {
         public static IServiceCollection AddValidator(this  IServiceCollection services)
         {
-            services.AddTransient<UserDtoValidator>();
+            services.AddMvc(options => { }).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<UsersDtoValidator>());
             return services;
         }
     }
