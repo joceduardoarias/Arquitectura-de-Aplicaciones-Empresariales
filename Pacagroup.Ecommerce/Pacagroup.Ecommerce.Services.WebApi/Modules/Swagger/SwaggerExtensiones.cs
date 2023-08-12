@@ -3,6 +3,8 @@ using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Reflection;
 using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Collections.Generic;
 
 namespace Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger
 {
@@ -24,25 +26,26 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                var securityScheme = new OpenApiSecurityScheme()
                 {
-                    Description = "Authorization by API key.",
+                    Name = "Authoritation",
+                    Description = "Enter JWT Bearer tonken **_only_**",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Name = "Authorization"
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Reference = new OpenApiReference()
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[]{ }
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
                     }
+
+                };
+
+                c.AddSecurityDefinition("Bearer", securityScheme);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                        {securityScheme, new List<string>() { } }
                 });
             });
             return services;
