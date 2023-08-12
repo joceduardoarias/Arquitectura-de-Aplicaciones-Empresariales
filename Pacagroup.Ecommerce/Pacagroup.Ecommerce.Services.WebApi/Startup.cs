@@ -10,6 +10,8 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Mapper;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Feature;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Injection;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Validator;
+using HealthChecks.UI.Client;
+using Pacagroup.Ecommerce.Services.WebApi.Modules.HealthCheck;
 
 namespace Pacagroup.Ecommerce.Services.WebApi
 {
@@ -38,6 +40,8 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             services.AddSwagger();
             // Configure Validators
             services.AddValidator();
+            // Configure HealthCheck
+            services.AddHealthCheck(Configuration);
 
             services.AddControllers().AddNewtonsoftJson(options =>
             {
@@ -72,6 +76,12 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecksUI();
+                endpoints.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
         }
     }
