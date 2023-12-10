@@ -1,22 +1,24 @@
-﻿using Pacagroup.Ecommerce.Transversal.Common;
-using Pacagroup.Ecommerce.Infraestructure.Interface;
+﻿using Pacagroup.Ecommerce.Infraestructure.Interface;
 using Pacagroup.Ecommerce.Domain.Entity;
 using Dapper;
 using System.Data;
+using Pacagroup.Ecommerce.Infraestructure.Data;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Pacagroup.Ecommerce.Infraestructure.Repository
 {
     public class UserRepository : IUsersRepository
     {
-        private readonly IConnectionFactory _connectionFactory;
-        public UserRepository(IConnectionFactory connectionFactory)
+        private readonly DapperContext _context;
+        public UserRepository(DapperContext context)
         {
-            _connectionFactory = connectionFactory;
+            _context = context;
         }
 
         public Users Authenticate(string userName, string password)
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "UsersGetByUserAndPassword";
                 var parameters = new DynamicParameters();
@@ -26,6 +28,56 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 var user = connection.QuerySingle<Users>(query, param: parameters, commandType: CommandType.StoredProcedure);
                 return user;
             }
+        }
+
+        public bool Delete(string Id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> DeleteAsync(string Id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Users Get(string Id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Users> GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<Users>> GetAllAsync()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Users> GetAsync(string Id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Insert(Users entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> InsertAsync(Users entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Update(Users entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> UpdateAsync(Users entity)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

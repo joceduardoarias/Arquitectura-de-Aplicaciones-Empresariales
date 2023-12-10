@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pacagroup.Ecommerce.Domain.Entity;
 using Pacagroup.Ecommerce.Infraestructura.Interface;
-using Pacagroup.Ecommerce.Transversal.Common;
 using System.Data;
-using System.Data.SqlClient;
 using Dapper;
+using Pacagroup.Ecommerce.Infraestructure.Data;
 
 namespace Pacagroup.Ecommerce.Infraestructure.Repository
 {
     public class CustomerRepository : ICustomersRepository
     {   
-        private readonly IConnectionFactory _connectionFactory;
-        public CustomerRepository(IConnectionFactory connectionFactory)
+        private readonly DapperContext _context;
+        public CustomerRepository(DapperContext context)
         {
-            _connectionFactory = connectionFactory;
+            _context = context;
         }
-        public bool DeleteCustomer(string customerId)
+        public bool Delete(string customerId)
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersDelete";
                 var parameters = new DynamicParameters();
@@ -29,9 +27,9 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public async Task<bool> DeleteCustomerAsync(string customerId)
+        public async Task<bool> DeleteAsync(string customerId)
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersDelete";
                 var parameters = new DynamicParameters();
@@ -41,9 +39,9 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public Customers GetCustomer(string customerId)
+        public Customers Get(string customerId)
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersGetByID";
                 var parameters = new DynamicParameters();
@@ -53,9 +51,9 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public async Task<Customers> GetCustomerAsync(string customerId)
+        public async Task<Customers> GetAsync(string customerId)
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersGetByID";
                 var parameters = new DynamicParameters();
@@ -65,9 +63,9 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public IEnumerable<Customers> GetCustomers()
+        public IEnumerable<Customers> GetAll()
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersList";
                 var rs = connection.Query<Customers>(query, commandType: CommandType.StoredProcedure);
@@ -75,9 +73,9 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public async Task<IEnumerable<Customers>> GetCustomersAsync()
+        public async Task<IEnumerable<Customers>> GetAllAsync()
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersList";
                 var rs = await connection.QueryAsync<Customers>(query, commandType: CommandType.StoredProcedure);
@@ -85,9 +83,9 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public bool InsertCustomer(Customers customer)
+        public bool Insert(Customers customer)
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersInsert";
                 var parameters = new DynamicParameters();
@@ -108,9 +106,9 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public async Task<bool> InsertCustomerAsync(Customers customer)
+        public async Task<bool> InsertAsync(Customers customer)
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersInsert";
                 var parameters = new DynamicParameters();
@@ -131,9 +129,9 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public bool UpdateCustomer(Customers customer)
+        public bool Update(Customers customer)
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersUpdate";
                 var parameters = new DynamicParameters();
@@ -154,9 +152,9 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public async Task<bool> UpdateCustomerAsync(Customers customer)
+        public async Task<bool> UpdateAsync(Customers customer)
         {
-            using (var connection = _connectionFactory.GetConnection)
+            using (var connection = _context.CreateConnection())
             {
                 var query = "CustomersUpdate";
                 var parameters = new DynamicParameters();
