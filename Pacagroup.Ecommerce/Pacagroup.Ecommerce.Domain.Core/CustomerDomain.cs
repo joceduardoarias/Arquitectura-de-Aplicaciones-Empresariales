@@ -5,61 +5,62 @@ using Pacagroup.Ecommerce.Domain.Entity;
 using Pacagroup.Ecommerce.Domain.Interface;
 using Pacagroup.Ecommerce.Infraestructura.Interface;
 using System.Threading.Tasks;
+using Pacagroup.Ecommerce.Infraestructure.Interface;
 
 namespace Pacagroup.Ecommerce.Domain.Core
 {
     public class CustomerDomain : ICustomerDomain
     {
-        private readonly ICustomersRepository _customersRepository;
-        public CustomerDomain(ICustomersRepository customersRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CustomerDomain(IUnitOfWork unitOfWork)
         {
-            _customersRepository = customersRepository;
+            _unitOfWork = unitOfWork;
         }
         public bool DeleteCustomer(string customerId)
         {
-            return _customersRepository.Delete(customerId);
+            return _unitOfWork.customersRepository.Delete(customerId);
         }
         public async Task<bool> DeleteCustomerAsync(string customerId)
         {
-            return await _customersRepository.DeleteAsync(customerId);
+            return await _unitOfWork.customersRepository.DeleteAsync(customerId);
         }
         public Customers GetCustomer(string customerId)
         {
-            return _customersRepository.Get(customerId);
+            return _unitOfWork.customersRepository.Get(customerId);
         }
         public async Task<Customers> GetCustomerAsync(string customerId)
         {
-            return await _customersRepository.GetAsync(customerId);
+            return await _unitOfWork.customersRepository.GetAsync(customerId);
         }
 
         public IEnumerable<Customers> GetCustomers()
         {
-            return _customersRepository.GetAll();
+            return _unitOfWork.customersRepository.GetAll();
         }
 
         public async Task<IEnumerable<Customers>> GetCustomersAsync()
         {
-            return await _customersRepository.GetAllAsync();
+            return await _unitOfWork.customersRepository.GetAllAsync();
         }
 
         public bool InsertCustomer(Customers customer)
         {
-            return _customersRepository.Insert(customer);
+            return _unitOfWork.customersRepository.Insert(customer);
         }
 
         public async Task<bool> InsertCustomerAsync(Customers customer)
         {
-            return await _customersRepository.InsertAsync(customer);
+            return await _unitOfWork.customersRepository.InsertAsync(customer);
         }
 
         public bool UpdateCustomer(Customers customer)
         {
-            return _customersRepository.Update(customer);
+            return _unitOfWork.customersRepository.Update(customer);
         }
 
         public async Task<bool> UpdateCustomerAsync(Customers customer)
         {
-            return await _customersRepository.UpdateAsync(customer);
+            return await _unitOfWork.customersRepository.UpdateAsync(customer);
         }
     }
 }

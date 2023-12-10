@@ -6,15 +6,15 @@ namespace Pacagroup.Ecommerce.Domain.Core
 {
     public class UsersDomain : IUsersDomain
     {   
-        private readonly IUsersRepository _usersRepository;
-        public UsersDomain(IUsersRepository usersRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public UsersDomain(IUnitOfWork unitOfWork)
         {
-            _usersRepository = usersRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public Users Authenticate(string userName, string password)
         {
-            return _usersRepository.Authenticate(userName, password);
+            return _unitOfWork.usersRepository.Authenticate(userName, password);
         }
     }
 }
