@@ -83,8 +83,14 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        [HttpGet("GetCustomersWithPagination")]
+        public IActionResult GetCustomersWithPagination([FromQuery]int pageNumber, int pageSize)
+        {
+            var customers = _customerApplication.GetAllWithPagination(pageNumber,pageSize);
+            return Ok(customers);
+        }
         #endregion
-        
+
         #region Metodos Asincronos
         [HttpGet("GetCustomersAsync")]
         public async Task<IActionResult> GetCustomersAsync()
@@ -148,6 +154,12 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+        [HttpGet("GetCustomersWithPaginationAsync")]
+        public async Task<IActionResult> GetCustomersWithPaginationAsync([FromQuery] int pageNumber, int pageSize)
+        {
+            var customers = await _customerApplication.GetAllWithPaginationAsync(pageNumber, pageSize);
+            return Ok(customers);
         }
         #endregion
     }

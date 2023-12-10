@@ -65,6 +65,62 @@ namespace Pacagroup.Ecommerce.Application.Main
             return response;
         }
 
+        public ResponsePagination<IEnumerable<CustomersDto>> GetAllWithPagination(int pageNumber, int pageSize)
+        {
+            var response = new ResponsePagination<IEnumerable<CustomersDto>>();
+            try
+            {
+                var count = _customerDomain.Count();
+                var custOmers = _customerDomain.GetAllWithPagination(pageNumber, pageSize);
+                response.Data = _mapper.Map<IEnumerable<CustomersDto>>(custOmers);
+
+                if (response.Data != null)
+                {
+                    response.PageNumber = pageNumber;
+                    response.TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+                    response.TotalCount = count;
+                    response.IsSuccess = true;
+                    response.Message = "Consulta Paginada Exitosa!!!";
+                }                
+            }
+            catch (Exception ex)
+            {
+
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+                _logger.LogError(ex.Message);
+            }
+            return response;
+        }
+
+        public async Task<ResponsePagination<IEnumerable<CustomersDto>>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+        {
+            var response = new ResponsePagination<IEnumerable<CustomersDto>>();
+            try
+            {
+                var count = await _customerDomain.CountAsync();
+                var custOmers = await _customerDomain.GetAllWithPaginationAsync(pageNumber, pageSize);
+                response.Data = _mapper.Map<IEnumerable<CustomersDto>>(custOmers);
+
+                if (response.Data != null)
+                {
+                    response.PageNumber = pageNumber;
+                    response.TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+                    response.TotalCount = count;
+                    response.IsSuccess = true;
+                    response.Message = "Consulta Paginada Exitosa!!!";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+                _logger.LogError(ex.Message);
+            }
+            return response;
+        }
+
         public Response<CustomersDto> GetCustomer(string customerId)
         {
             var response = new Response<CustomersDto>();

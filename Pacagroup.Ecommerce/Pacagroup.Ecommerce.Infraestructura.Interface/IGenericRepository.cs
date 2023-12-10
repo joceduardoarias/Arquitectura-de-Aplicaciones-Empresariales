@@ -11,6 +11,8 @@ namespace Pacagroup.Ecommerce.Infraestructure.Interface
         bool Insert(T entity);
         bool Update(T entity);
         bool Delete(string Id);
+        IEnumerable<T> GetAllWithPagination(int pageNumber, int pageSize);
+        int Count();
         #endregion
 
         #region "Metodos Asincronos"
@@ -19,6 +21,8 @@ namespace Pacagroup.Ecommerce.Infraestructure.Interface
         Task<bool> InsertAsync(T entity);
         Task<bool> UpdateAsync(T entity);
         Task<bool> DeleteAsync(string Id);
+        Task <IEnumerable<T>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
+        Task<int> CountAsync();
         #endregion
     }
 }

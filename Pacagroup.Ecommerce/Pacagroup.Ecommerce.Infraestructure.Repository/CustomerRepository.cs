@@ -72,7 +72,29 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return rs;
             }
         }
+        public IEnumerable<Customers> GetAllWithPagination(int pageNumber, int pageSize)
+        {
+            using var connection = _context.CreateConnection();
+            var query = "CustomersListWithPagination";
+            var parameters = new DynamicParameters();
+            parameters.Add("pPageNumber", pageNumber);
+            parameters.Add("pPageSize", pageSize);
+            
+            var customers = connection.Query<Customers>(query, param: parameters, commandType: CommandType.StoredProcedure);
+            
+            return customers;
+        }
+        public int Count()
+        {
+            using var connection = _context.CreateConnection();
+            var query = "Select Count(*) from Customers";
 
+            var count = connection.ExecuteScalar<int>(query, commandType: CommandType.Text);
+
+            return count;
+        }
+        #region Métodos Asíncronos
+        
         public async Task<IEnumerable<Customers>> GetAllAsync()
         {
             using (var connection = _context.CreateConnection())
@@ -174,5 +196,29 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return rs > 0;
             }
         }
+                
+        public async Task<int> CountAsync()
+        {
+            using var connection = _context.CreateConnection();
+            var query = "Select Count(*) from Customers";
+
+            var count = connection.ExecuteScalar<int>(query, commandType: CommandType.Text);
+
+            return count;
+        }
+
+        public async Task<IEnumerable<Customers>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+        {
+            using var connection = _context.CreateConnection();
+            var query = "CustomersListWithPagination";
+            var parameters = new DynamicParameters();
+            parameters.Add("pPageNumber", pageNumber);
+            parameters.Add("pPageSize", pageSize);
+
+            var customers = connection.Query<Customers>(query, param: parameters, commandType: CommandType.StoredProcedure);
+
+            return customers;
+        }
+        #endregion
     }
 }

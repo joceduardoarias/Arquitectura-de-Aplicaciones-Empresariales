@@ -14,6 +14,8 @@ namespace Pacagroup.Ecommerce.Domain.Interface
         bool InsertCustomer(Customers customer);
         bool UpdateCustomer(Customers customer);
         bool DeleteCustomer(string customerId);
+        IEnumerable<Customers> GetAllWithPagination(int pageNumber, int pageSize);
+        int Count();
         #endregion
 
         #region "Metodos Asincronos"
@@ -22,6 +24,8 @@ namespace Pacagroup.Ecommerce.Domain.Interface
         Task<bool> InsertCustomerAsync(Customers customer);
         Task<bool> UpdateCustomerAsync(Customers customer);
         Task<bool> DeleteCustomerAsync(string customerId);
+        Task<IEnumerable<Customers>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
+        Task<int> CountAsync();
         #endregion
     }
 }
