@@ -15,6 +15,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
         {
             _context = context;
         }
+        #region Métodos Síncronos
         public bool Delete(string customerId)
         {
             using (var connection = _context.CreateConnection())
@@ -93,8 +94,10 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
 
             return count;
         }
+        #endregion
+
         #region Métodos Asíncronos
-        
+
         public async Task<IEnumerable<Customers>> GetAllAsync()
         {
             using (var connection = _context.CreateConnection())
