@@ -6,6 +6,7 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Feature;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.HealthCheck;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Injection;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Mapper;
+using Pacagroup.Ecommerce.Services.WebApi.Modules.RateLimiterExtensions;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Redis;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Validator;
@@ -36,7 +37,9 @@ builder.Services.AddHealthCheck(builder.Configuration);
 builder.Services.AddWatchDog(builder.Configuration);
 // Register Redis
 builder.Services.AddRedisCache(builder.Configuration);
-//register the API versioning services
+// Register RateLimit
+builder.Services.AddRateLimiting(builder.Configuration);
+// Register the API versioning services
 builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true;
