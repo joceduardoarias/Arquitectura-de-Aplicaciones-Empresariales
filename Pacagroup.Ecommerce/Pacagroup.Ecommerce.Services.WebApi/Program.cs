@@ -6,6 +6,7 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Feature;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.HealthCheck;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Injection;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Mapper;
+using Pacagroup.Ecommerce.Services.WebApi.Modules.Redis;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Validator;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Watch;
@@ -33,7 +34,8 @@ builder.Services.AddValidator();
 builder.Services.AddHealthCheck(builder.Configuration);
 // Register WatchDog
 builder.Services.AddWatchDog(builder.Configuration);
-
+// Register Redis
+builder.Services.AddRedisCache(builder.Configuration);
 //register the API versioning services
 builder.Services.AddApiVersioning(options =>
 {
