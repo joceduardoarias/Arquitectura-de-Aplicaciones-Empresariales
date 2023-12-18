@@ -15,8 +15,8 @@ using System.Security.Cryptography;
 namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]    
     public class UsersController : Controller
     {
         private readonly IUsersApplication _userApplication;

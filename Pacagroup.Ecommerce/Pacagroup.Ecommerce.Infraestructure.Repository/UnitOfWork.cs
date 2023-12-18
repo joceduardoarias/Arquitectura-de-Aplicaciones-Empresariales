@@ -9,10 +9,14 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
         public ICustomersRepository customersRepository { get; }
 
         public IUsersRepository usersRepository { get; }
-        public UnitOfWork(ICustomersRepository customers, IUsersRepository users)
+
+        public ICategoriesRepository categoriesRepository { get; }
+
+        public UnitOfWork(ICustomersRepository customers, IUsersRepository users, ICategoriesRepository categories)
         {
             customersRepository = customers;
             usersRepository = users;
+            categoriesRepository = categories;   
         }
 
         public void Dispose()

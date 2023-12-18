@@ -9,5 +9,6 @@ namespace Pacagroup.Ecommerce.Infraestructure.Interface
     {
         ICustomersRepository customersRepository { get; }
         IUsersRepository usersRepository { get; }
+        ICategoriesRepository categoriesRepository { get; }
     }
 }

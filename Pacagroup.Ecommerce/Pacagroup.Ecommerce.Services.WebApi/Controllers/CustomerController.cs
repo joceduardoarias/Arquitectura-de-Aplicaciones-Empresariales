@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
 {
     [Authorize]
-    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class CustomerController : Controller
     {
         private readonly ICustomerApplication _customerApplication;
