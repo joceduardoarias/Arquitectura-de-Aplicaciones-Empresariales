@@ -1,24 +1,24 @@
 ﻿using System;
 using AutoMapper;
 using Pacagroup.Ecommerce.Application.DTO;
-using Pacagroup.Ecommerce.Application.Interface;
-using Pacagroup.Ecommerce.Domain.Interface;
 using Pacagroup.Ecommerce.Domain.Entity;
 using Pacagroup.Ecommerce.Transversal.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Pacagroup.Ecommerce.Application.Interface.UseCase;
+using Pacagroup.Ecommerce.Application.Interface.Persistence;
 
-namespace Pacagroup.Ecommerce.Application.Main
+namespace Pacagroup.Ecommerce.Application.UseCase
 {
     public class CustomerApplication :ICustomerApplication
     {
-        private readonly ICustomerDomain _customerDomain;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IloggerApp<CustomerApplication> _logger;
-        public CustomerApplication(ICustomerDomain customerDomain, IMapper mapper, IloggerApp<CustomerApplication> logger)
+        public CustomerApplication(IUnitOfWork customerDomain, IMapper mapper, IloggerApp<CustomerApplication> logger)
         {
-            _customerDomain = customerDomain;
+            _unitOfWork = customerDomain;
             _mapper = mapper;
             _logger = logger;
         }
@@ -28,7 +28,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             var response = new Response<bool>();
             try
             {
-                response.Data = _customerDomain.DeleteCustomer(customerId);
+                response.Data = _unitOfWork.customersRepository.Delete(customerId);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -50,7 +50,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             var response = new Response<bool>();
             try
             {
-                response.Data = await _customerDomain.DeleteCustomerAsync(customerId);
+                response.Data = await _unitOfWork.customersRepository.DeleteAsync(customerId);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -70,8 +70,8 @@ namespace Pacagroup.Ecommerce.Application.Main
             var response = new ResponsePagination<IEnumerable<CustomersDto>>();
             try
             {
-                var count = _customerDomain.Count();
-                var custOmers = _customerDomain.GetAllWithPagination(pageNumber, pageSize);
+                var count = _unitOfWork.customersRepository.Count();
+                var custOmers = _unitOfWork.customersRepository.GetAllWithPagination(pageNumber, pageSize);
                 response.Data = _mapper.Map<IEnumerable<CustomersDto>>(custOmers);
 
                 if (response.Data != null)
@@ -98,8 +98,8 @@ namespace Pacagroup.Ecommerce.Application.Main
             var response = new ResponsePagination<IEnumerable<CustomersDto>>();
             try
             {
-                var count = await _customerDomain.CountAsync();
-                var custOmers = await _customerDomain.GetAllWithPaginationAsync(pageNumber, pageSize);
+                var count = await _unitOfWork.customersRepository.CountAsync();
+                var custOmers = await _unitOfWork.customersRepository.GetAllWithPaginationAsync(pageNumber, pageSize);
                 response.Data = _mapper.Map<IEnumerable<CustomersDto>>(custOmers);
 
                 if (response.Data != null)
@@ -126,7 +126,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             var response = new Response<CustomersDto>();
             try
             {
-                response.Data = _mapper.Map<CustomersDto>(_customerDomain.GetCustomer(customerId));
+                response.Data = _mapper.Map<CustomersDto>(_unitOfWork.customersRepository.Get(customerId));
                 if (response.Data != null)
                 {
                     response.IsSuccess = true;
@@ -148,7 +148,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             var response = new Response<CustomersDto>();
             try
             {
-                response.Data = _mapper.Map<CustomersDto>(await _customerDomain.GetCustomerAsync(customerId));
+                response.Data = _mapper.Map<CustomersDto>(await _unitOfWork.customersRepository.GetAsync(customerId));
                 if (response.Data != null)
                 {
                     response.IsSuccess = true;
@@ -170,7 +170,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             var response = new Response<IEnumerable<CustomersDto>>();
             try
             {
-                var customers = _customerDomain.GetCustomers();
+                var customers = _unitOfWork.customersRepository.GetAll();
                 response.Data = _mapper.Map<IEnumerable<CustomersDto>>(customers);
                 if (response.Data.Any())
                 {
@@ -193,7 +193,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             var response = new Response<IEnumerable<CustomersDto>>();
             try
             {
-                response.Data = _mapper.Map<IEnumerable<CustomersDto>>(await _customerDomain.GetCustomersAsync());
+                response.Data = _mapper.Map<IEnumerable<CustomersDto>>(await _unitOfWork.customersRepository.GetAllAsync());
                 if (response.Data.Any())
                 {
                     response.IsSuccess = true;
@@ -216,7 +216,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             try
             {
                 var customerEntity = _mapper.Map<Customers>(customerDTO);
-                response.Data = _customerDomain.InsertCustomer(customerEntity);
+                response.Data = _unitOfWork.customersRepository.Insert(customerEntity);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -239,7 +239,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             try
             {
                 var customerEntity = _mapper.Map<Customers>(customerDTO);
-                response.Data = await _customerDomain.InsertCustomerAsync(customerEntity);
+                response.Data = await _unitOfWork.customersRepository.InsertAsync(customerEntity);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -262,7 +262,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             try
             {
                 var customerEntity = _mapper.Map<Customers>(customerDTO);
-                response.Data = _customerDomain.UpdateCustomer(customerEntity);
+                response.Data = _unitOfWork.customersRepository.Update(customerEntity);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -285,7 +285,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             try
             {
                 var customerEntity = _mapper.Map<Customers>(customerDTO);
-                 response.Data = await _customerDomain.UpdateCustomerAsync(customerEntity);
+                 response.Data = await _unitOfWork.customersRepository.UpdateAsync(customerEntity);
                 if (response.Data)
                 {
                     response.IsSuccess = true;

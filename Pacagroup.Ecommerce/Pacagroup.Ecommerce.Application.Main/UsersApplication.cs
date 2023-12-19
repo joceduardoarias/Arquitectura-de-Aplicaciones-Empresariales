@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
 using Pacagroup.Ecommerce.Application.DTO;
-using Pacagroup.Ecommerce.Application.Interface;
+using Pacagroup.Ecommerce.Application.Interface.Persistence;
+using Pacagroup.Ecommerce.Application.Interface.UseCase;
 using Pacagroup.Ecommerce.Application.Validator;
-using Pacagroup.Ecommerce.Domain.Interface;
 using Pacagroup.Ecommerce.Transversal.Common;
 
 using System;
 
-namespace Pacagroup.Ecommerce.Application.Main
+namespace Pacagroup.Ecommerce.Application.UseCase
 {
     public class UsersApplication : IUsersApplication
     {
-        private readonly IUsersDomain _usersDomain;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserDtoValidator _userDtoValidator;
-        public UsersApplication(IUsersDomain usersDomain, IMapper mapper, UserDtoValidator userDtoValidator)
+        public UsersApplication(IUnitOfWork unitOfWork, IMapper mapper, UserDtoValidator userDtoValidator)
         {
-            _usersDomain = usersDomain;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userDtoValidator = userDtoValidator;
         }
@@ -33,7 +33,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             }
             try
             {
-                response.Data = _mapper.Map<UsersDTO>(_usersDomain.Authenticate(userName, password));
+                response.Data = _mapper.Map<UsersDTO>(_unitOfWork.usersRepository.Authenticate(userName, password));
                 if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
                 {
                     response.Message = "Username or password is empty";

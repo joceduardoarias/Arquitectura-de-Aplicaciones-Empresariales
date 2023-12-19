@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Pacagroup.Ecommerce.Infraestructure.Interface
+namespace Pacagroup.Ecommerce.Application.Interface.Persistence
 {
     public interface IGenericRepository<T> where T: class
     {

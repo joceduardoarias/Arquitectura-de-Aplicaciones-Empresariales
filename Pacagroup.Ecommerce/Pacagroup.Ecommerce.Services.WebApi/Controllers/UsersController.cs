@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Pacagroup.Ecommerce.Application.DTO;
-using Pacagroup.Ecommerce.Application.Interface;
 using Pacagroup.Ecommerce.Services.WebApi.Helpers;
 using Pacagroup.Ecommerce.Transversal.Common;
 using System;
@@ -11,6 +10,7 @@ using System.Text;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Cryptography;
+using Pacagroup.Ecommerce.Application.Interface.UseCase;
 
 namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
 {

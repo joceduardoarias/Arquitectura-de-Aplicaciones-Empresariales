@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Caching.Distributed;
 using Pacagroup.Ecommerce.Application.DTO;
-using Pacagroup.Ecommerce.Application.Interface;
-using Pacagroup.Ecommerce.Domain.Interface;
+using Pacagroup.Ecommerce.Application.Interface.UseCase;
 using Pacagroup.Ecommerce.Transversal.Common;
 using System;
 using System.Collections.Generic;
@@ -10,19 +9,20 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Pacagroup.Ecommerce.Application.Interface.Persistence;
 
-namespace Pacagroup.Ecommerce.Application.Main
+namespace Pacagroup.Ecommerce.Application.UseCase
 {
     public class CategoriesApplication : ICategoriesApplication
     {
-        private readonly ICategoriesDomain _categoriesDomain;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IloggerApp<CategoriesApplication> _logger;
         private readonly IDistributedCache _distributedCache;
 
-        public CategoriesApplication(ICategoriesDomain categories, IMapper mapper, IloggerApp<CategoriesApplication> logger, IDistributedCache distributedCache)
+        public CategoriesApplication(IUnitOfWork categories, IMapper mapper, IloggerApp<CategoriesApplication> logger, IDistributedCache distributedCache)
         {
-            _categoriesDomain = categories;
+            _unitOfWork = categories;
             _mapper = mapper;
             _logger = logger;
             _distributedCache = distributedCache;
@@ -42,7 +42,7 @@ namespace Pacagroup.Ecommerce.Application.Main
                 }
                 else
                 {   //Si el caché esta vacío busca en la base de datos.
-                    response.Data = _mapper.Map<IEnumerable<CategoriesDto>>(await _categoriesDomain.GetAll());
+                    response.Data = _mapper.Map<IEnumerable<CategoriesDto>>(await _unitOfWork.categoriesRepository.GetAll());
 
                     if (response.Data != null)
                     {

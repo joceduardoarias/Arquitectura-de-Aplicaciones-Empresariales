@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pacagroup.Ecommerce.Domain.Entity;
-using Pacagroup.Ecommerce.Infraestructura.Interface;
 using System.Data;
 using Dapper;
-using Pacagroup.Ecommerce.Infraestructure.Data;
+using Pacagroup.Ecommerce.Persistence.Data;
+using Pacagroup.Ecommerce.Application.Interface.Persistence;
 
-namespace Pacagroup.Ecommerce.Infraestructure.Repository
+namespace Pacagroup.Ecommerce.Persistence.Repository
 {
     public class CustomerRepository : ICustomersRepository
     {   

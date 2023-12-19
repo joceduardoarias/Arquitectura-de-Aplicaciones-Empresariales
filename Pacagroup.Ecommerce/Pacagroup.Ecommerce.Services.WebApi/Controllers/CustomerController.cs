@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pacagroup.Ecommerce.Application.DTO;
-using Pacagroup.Ecommerce.Application.Interface;
+using Pacagroup.Ecommerce.Application.Interface.UseCase;
 using System;
 using System.Threading.Tasks;
 

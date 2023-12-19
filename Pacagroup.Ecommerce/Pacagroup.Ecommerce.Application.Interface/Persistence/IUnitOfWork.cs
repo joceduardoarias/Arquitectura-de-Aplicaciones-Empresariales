@@ -1,9 +1,6 @@
-﻿using Pacagroup.Ecommerce.Infraestructura.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
-namespace Pacagroup.Ecommerce.Infraestructure.Interface
+namespace Pacagroup.Ecommerce.Application.Interface.Persistence
 {
     public interface IUnitOfWork : IDisposable
     {
