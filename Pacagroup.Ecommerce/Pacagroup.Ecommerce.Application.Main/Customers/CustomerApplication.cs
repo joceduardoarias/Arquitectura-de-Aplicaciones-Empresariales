@@ -1,11 +1,7 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Pacagroup.Ecommerce.Application.DTO;
 using Pacagroup.Ecommerce.Domain.Entity;
 using Pacagroup.Ecommerce.Transversal.Common;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
 using Pacagroup.Ecommerce.Application.Interface.UseCase;
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
 

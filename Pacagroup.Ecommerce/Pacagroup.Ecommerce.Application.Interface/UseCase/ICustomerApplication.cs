@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Pacagroup.Ecommerce.Application.DTO;
+﻿using Pacagroup.Ecommerce.Application.DTO;
 using Pacagroup.Ecommerce.Transversal.Common;
-using System.Threading.Tasks;
 
 namespace Pacagroup.Ecommerce.Application.Interface.UseCase
 {

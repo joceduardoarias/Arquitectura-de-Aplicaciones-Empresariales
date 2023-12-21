@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="7.0.0" />
@@ -19,14 +19,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Pacagroup.Ecommerce.Application.DTO\Pacagroup.Ecommerce.Application.DTO.csproj" />
     <ProjectReference Include="..\Pacagroup.Ecommerce.Application.Interface\Pacagroup.Ecommerce.Application.Interface.csproj" />
@@ -38,6 +36,4 @@
     <ProjectReference Include="..\Pacagroup.Ecommerce.Transversal.Logging\Pacagroup.Ecommerce.Transversal.Logging.csproj" />
     <ProjectReference Include="..\Pacagroup.Ecommerce.Transversal.Mapper\Pacagroup.Ecommerce.Transversal.Mapper.csproj" />
   </ItemGroup>
-
-
 </Project>
