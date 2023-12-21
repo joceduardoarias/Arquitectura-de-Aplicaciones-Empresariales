@@ -1,10 +1,10 @@
 ﻿using Pacagroup.Ecommerce.Application.Interface.Persistence;
 
-namespace Pacagroup.Ecommerce.Persistence.Repository
+namespace Pacagroup.Ecommerce.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-       
+
         public ICustomersRepository customersRepository { get; }
 
         public IUsersRepository usersRepository { get; }
@@ -15,7 +15,7 @@ namespace Pacagroup.Ecommerce.Persistence.Repository
         {
             customersRepository = customers;
             usersRepository = users;
-            categoriesRepository = categories;   
+            categoriesRepository = categories;
         }
 
         public void Dispose()

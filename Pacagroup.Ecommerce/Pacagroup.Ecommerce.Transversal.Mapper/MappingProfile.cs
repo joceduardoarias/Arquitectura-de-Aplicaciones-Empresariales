@@ -8,9 +8,9 @@ namespace Pacagroup.Ecommerce.Transversal.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Customers, CustomersDto>().ReverseMap();     
-            CreateMap<Users,UsersDTO>().ReverseMap();
-            CreateMap<Categories, CategoriesDto>().ReverseMap();
+            CreateMap<Customer, CustomerDto>().ReverseMap();     
+            CreateMap<User,UserDTO>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
         }
     }
 }

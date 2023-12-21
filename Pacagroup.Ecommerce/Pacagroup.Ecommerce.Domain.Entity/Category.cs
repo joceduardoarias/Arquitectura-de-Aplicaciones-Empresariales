@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pacagroup.Ecommerce.Domain.Entity
 {
-    public class Categories
+    public class Category
     {
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }

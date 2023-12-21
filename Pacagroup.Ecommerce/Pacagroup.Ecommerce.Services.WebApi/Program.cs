@@ -11,6 +11,8 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Redis;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Validator;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Watch;
+using Pacagroup.Ecommerce.Persistence;
+using Pacagroup.Ecommerce.Application.UseCase;
 using WatchDog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddMapper();
 // Configure Cors policy
 builder.Services.AddFeatures(builder.Configuration);
+// Configure Persistence services
+builder.Services.AddPersistenceServices(builder.Configuration);
+// Configure Application services
+builder.Services.AddApplicationServices(builder.Configuration);
 // Configure Dependency Injection            
 builder.Services.AddInjection(builder.Configuration);
 // Configure JWT Authentication

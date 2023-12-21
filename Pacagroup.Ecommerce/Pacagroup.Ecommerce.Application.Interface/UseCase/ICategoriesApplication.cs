@@ -7,6 +7,6 @@ namespace Pacagroup.Ecommerce.Application.Interface.UseCase
 {
     public interface ICategoriesApplication
     {
-        Task<Response<IEnumerable<CategoriesDto>>> GetAll();
+        Task<Response<IEnumerable<CategoryDto>>> GetAll();
     }
 }

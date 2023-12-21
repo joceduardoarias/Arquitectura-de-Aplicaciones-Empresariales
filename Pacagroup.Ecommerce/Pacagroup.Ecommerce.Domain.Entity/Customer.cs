@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Pacagroup.Ecommerce.Application.DTO
+namespace Pacagroup.Ecommerce.Domain.Entity
 {
-    public class CustomersDto
+    public class Customer
     {
         public string CustomerId { get; set; }
         public string CompanyName { get; set; }

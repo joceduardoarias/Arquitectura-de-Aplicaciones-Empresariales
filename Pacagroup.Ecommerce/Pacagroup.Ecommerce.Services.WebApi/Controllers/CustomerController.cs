@@ -33,7 +33,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
             return Ok(customer);
         }
         [HttpPost("InsertCustomer")]
-        public IActionResult InsertCustomer([FromBody] CustomersDto customerDTO)
+        public IActionResult InsertCustomer([FromBody] CustomerDto customerDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
             }
         }
         [HttpPut("UpdateCustomer")]
-        public IActionResult UpdateCustomer([FromBody] CustomersDto customerDTO)
+        public IActionResult UpdateCustomer([FromBody] CustomerDto customerDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -105,7 +105,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
             return Ok(customer);
         }
         [HttpPost("InsertCustomerAsync")]
-        public async Task<IActionResult> InsertCustomerAsync([FromBody] CustomersDto customerDTO)
+        public async Task<IActionResult> InsertCustomerAsync([FromBody] CustomerDto customerDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -122,7 +122,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
             }
         }
         [HttpPut("UpdateCustomerAsync")]
-        public async Task<IActionResult> UpdateCustomerAsync([FromBody] CustomersDto customerDTO)
+        public async Task<IActionResult> UpdateCustomerAsync([FromBody] CustomerDto customerDTO)
         {
             if (!ModelState.IsValid)
             {

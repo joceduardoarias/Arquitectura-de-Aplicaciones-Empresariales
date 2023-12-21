@@ -10,21 +10,21 @@ namespace Pacagroup.Ecommerce.Application.Interface.UseCase
     public interface ICustomerApplication
     {
         #region "Metodos Sincronos"
-        Response<IEnumerable<CustomersDto>> GetCustomers();
-        Response<CustomersDto> GetCustomer(string customerId);
-        Response<bool> InsertCustomer(CustomersDto customer);
-        Response<bool> UpdateCustomer(CustomersDto customer);
+        Response<IEnumerable<CustomerDto>> GetCustomers();
+        Response<CustomerDto> GetCustomer(string customerId);
+        Response<bool> InsertCustomer(CustomerDto customer);
+        Response<bool> UpdateCustomer(CustomerDto customer);
         Response<bool> DeleteCustomer(string customerId);
-        ResponsePagination<IEnumerable<CustomersDto>> GetAllWithPagination(int pageNumber, int pageSize);
+        ResponsePagination<IEnumerable<CustomerDto>> GetAllWithPagination(int pageNumber, int pageSize);
         #endregion
 
         #region "Metodos Asincronos"
-        Task<Response<IEnumerable<CustomersDto>>> GetCustomersAsync();
-        Task<Response<CustomersDto>> GetCustomerAsync(string customerId);
-        Task<Response<bool>> InsertCustomerAsync(CustomersDto customer);
-        Task<Response<bool>> UpdateCustomerAsync(CustomersDto customer);
+        Task<Response<IEnumerable<CustomerDto>>> GetCustomersAsync();
+        Task<Response<CustomerDto>> GetCustomerAsync(string customerId);
+        Task<Response<bool>> InsertCustomerAsync(CustomerDto customer);
+        Task<Response<bool>> UpdateCustomerAsync(CustomerDto customer);
         Task<Response<bool>> DeleteCustomerAsync(string customerId);
-        Task<ResponsePagination<IEnumerable<CustomersDto>>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
+        Task<ResponsePagination<IEnumerable<CustomerDto>>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
         #endregion
     }
 }

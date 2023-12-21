@@ -4,7 +4,7 @@ using Pacagroup.Ecommerce.Application.DTO;
 
 namespace Pacagroup.Ecommerce.Application.Validator
 {
-    public class UserDtoValidator : AbstractValidator<UsersDTO>
+    public class UserDtoValidator : AbstractValidator<UserDTO>
     {
         public UserDtoValidator()
         {

@@ -11,7 +11,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
 
-namespace Pacagroup.Ecommerce.Application.UseCase
+namespace Pacagroup.Ecommerce.Application.UseCase.Categories
 {
     public class CategoriesApplication : ICategoriesApplication
     {
@@ -28,21 +28,21 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             _distributedCache = distributedCache;
         }
 
-        public async Task<Response<IEnumerable<CategoriesDto>>> GetAll()
+        public async Task<Response<IEnumerable<CategoryDto>>> GetAll()
         {
-            var response = new Response<IEnumerable<CategoriesDto>>();
+            var response = new Response<IEnumerable<CategoryDto>>();
             var cacheKey = "categoriesList";
             try
-            {                
+            {
                 var redisCategories = await _distributedCache.GetAsync(cacheKey);
 
                 if (redisCategories != null)
                 {   //Si la lista de categorias esta cargada en caché la lee desde ahí
-                    response.Data = JsonSerializer.Deserialize<IEnumerable<CategoriesDto>>(redisCategories);
+                    response.Data = JsonSerializer.Deserialize<IEnumerable<CategoryDto>>(redisCategories);
                 }
                 else
                 {   //Si el caché esta vacío busca en la base de datos.
-                    response.Data = _mapper.Map<IEnumerable<CategoriesDto>>(await _unitOfWork.categoriesRepository.GetAll());
+                    response.Data = _mapper.Map<IEnumerable<CategoryDto>>(await _unitOfWork.categoriesRepository.GetAll());
 
                     if (response.Data != null)
                     {
@@ -54,7 +54,7 @@ namespace Pacagroup.Ecommerce.Application.UseCase
 
                         await _distributedCache.SetAsync(cacheKey, serializedCategories, options);
                     }
-                }                
+                }
 
                 if (response.Data.Any())
                 {

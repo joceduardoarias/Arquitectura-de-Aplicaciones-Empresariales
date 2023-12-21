@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pacagroup.Ecommerce.Application.DTO
 {
-    public class UsersDTO
+    public class UserDTO
     {
         public int UserId { get; set; }
         public string FirstName { get; set; }

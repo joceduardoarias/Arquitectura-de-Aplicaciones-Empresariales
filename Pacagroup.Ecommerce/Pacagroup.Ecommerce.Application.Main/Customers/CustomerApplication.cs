@@ -9,9 +9,9 @@ using System.Linq;
 using Pacagroup.Ecommerce.Application.Interface.UseCase;
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
 
-namespace Pacagroup.Ecommerce.Application.UseCase
+namespace Pacagroup.Ecommerce.Application.UseCase.Customers
 {
-    public class CustomerApplication :ICustomerApplication
+    public class CustomerApplication : ICustomerApplication
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace Pacagroup.Ecommerce.Application.UseCase
         }
 
         public Response<bool> DeleteCustomer(string customerId)
-        {   
+        {
             var response = new Response<bool>();
             try
             {
@@ -65,14 +65,14 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public ResponsePagination<IEnumerable<CustomersDto>> GetAllWithPagination(int pageNumber, int pageSize)
+        public ResponsePagination<IEnumerable<CustomerDto>> GetAllWithPagination(int pageNumber, int pageSize)
         {
-            var response = new ResponsePagination<IEnumerable<CustomersDto>>();
+            var response = new ResponsePagination<IEnumerable<CustomerDto>>();
             try
             {
                 var count = _unitOfWork.customersRepository.Count();
                 var custOmers = _unitOfWork.customersRepository.GetAllWithPagination(pageNumber, pageSize);
-                response.Data = _mapper.Map<IEnumerable<CustomersDto>>(custOmers);
+                response.Data = _mapper.Map<IEnumerable<CustomerDto>>(custOmers);
 
                 if (response.Data != null)
                 {
@@ -81,7 +81,7 @@ namespace Pacagroup.Ecommerce.Application.UseCase
                     response.TotalCount = count;
                     response.IsSuccess = true;
                     response.Message = "Consulta Paginada Exitosa!!!";
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -93,14 +93,14 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public async Task<ResponsePagination<IEnumerable<CustomersDto>>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+        public async Task<ResponsePagination<IEnumerable<CustomerDto>>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
         {
-            var response = new ResponsePagination<IEnumerable<CustomersDto>>();
+            var response = new ResponsePagination<IEnumerable<CustomerDto>>();
             try
             {
                 var count = await _unitOfWork.customersRepository.CountAsync();
                 var custOmers = await _unitOfWork.customersRepository.GetAllWithPaginationAsync(pageNumber, pageSize);
-                response.Data = _mapper.Map<IEnumerable<CustomersDto>>(custOmers);
+                response.Data = _mapper.Map<IEnumerable<CustomerDto>>(custOmers);
 
                 if (response.Data != null)
                 {
@@ -121,12 +121,12 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public Response<CustomersDto> GetCustomer(string customerId)
+        public Response<CustomerDto> GetCustomer(string customerId)
         {
-            var response = new Response<CustomersDto>();
+            var response = new Response<CustomerDto>();
             try
             {
-                response.Data = _mapper.Map<CustomersDto>(_unitOfWork.customersRepository.Get(customerId));
+                response.Data = _mapper.Map<CustomerDto>(_unitOfWork.customersRepository.Get(customerId));
                 if (response.Data != null)
                 {
                     response.IsSuccess = true;
@@ -143,12 +143,12 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public async Task<Response<CustomersDto>> GetCustomerAsync(string customerId)
-        {   
-            var response = new Response<CustomersDto>();
+        public async Task<Response<CustomerDto>> GetCustomerAsync(string customerId)
+        {
+            var response = new Response<CustomerDto>();
             try
             {
-                response.Data = _mapper.Map<CustomersDto>(await _unitOfWork.customersRepository.GetAsync(customerId));
+                response.Data = _mapper.Map<CustomerDto>(await _unitOfWork.customersRepository.GetAsync(customerId));
                 if (response.Data != null)
                 {
                     response.IsSuccess = true;
@@ -165,13 +165,13 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public Response<IEnumerable<CustomersDto>> GetCustomers()
+        public Response<IEnumerable<CustomerDto>> GetCustomers()
         {
-            var response = new Response<IEnumerable<CustomersDto>>();
+            var response = new Response<IEnumerable<CustomerDto>>();
             try
             {
                 var customers = _unitOfWork.customersRepository.GetAll();
-                response.Data = _mapper.Map<IEnumerable<CustomersDto>>(customers);
+                response.Data = _mapper.Map<IEnumerable<CustomerDto>>(customers);
                 if (response.Data.Any())
                 {
                     response.IsSuccess = true;
@@ -188,12 +188,12 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public async Task<Response<IEnumerable<CustomersDto>>> GetCustomersAsync()
-        {   
-            var response = new Response<IEnumerable<CustomersDto>>();
+        public async Task<Response<IEnumerable<CustomerDto>>> GetCustomersAsync()
+        {
+            var response = new Response<IEnumerable<CustomerDto>>();
             try
             {
-                response.Data = _mapper.Map<IEnumerable<CustomersDto>>(await _unitOfWork.customersRepository.GetAllAsync());
+                response.Data = _mapper.Map<IEnumerable<CustomerDto>>(await _unitOfWork.customersRepository.GetAllAsync());
                 if (response.Data.Any())
                 {
                     response.IsSuccess = true;
@@ -210,12 +210,12 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public Response<bool> InsertCustomer(CustomersDto customerDTO)
-        {   
+        public Response<bool> InsertCustomer(CustomerDto customerDTO)
+        {
             var response = new Response<bool>();
             try
             {
-                var customerEntity = _mapper.Map<Customers>(customerDTO);
+                var customerEntity = _mapper.Map<Customer>(customerDTO);
                 response.Data = _unitOfWork.customersRepository.Insert(customerEntity);
                 if (response.Data)
                 {
@@ -233,18 +233,18 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public async Task<Response<bool>> InsertCustomerAsync(CustomersDto customerDTO)
-        {   
+        public async Task<Response<bool>> InsertCustomerAsync(CustomerDto customerDTO)
+        {
             var response = new Response<bool>();
             try
             {
-                var customerEntity = _mapper.Map<Customers>(customerDTO);
+                var customerEntity = _mapper.Map<Customer>(customerDTO);
                 response.Data = await _unitOfWork.customersRepository.InsertAsync(customerEntity);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
-                    _logger.LogInformation("Customer insertado correctamente"); 
+                    _logger.LogInformation("Customer insertado correctamente");
                 }
             }
             catch (Exception ex)
@@ -256,12 +256,12 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public Response<bool> UpdateCustomer(CustomersDto customerDTO)
-        {   
+        public Response<bool> UpdateCustomer(CustomerDto customerDTO)
+        {
             var response = new Response<bool>();
             try
             {
-                var customerEntity = _mapper.Map<Customers>(customerDTO);
+                var customerEntity = _mapper.Map<Customer>(customerDTO);
                 response.Data = _unitOfWork.customersRepository.Update(customerEntity);
                 if (response.Data)
                 {
@@ -279,13 +279,13 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             return response;
         }
 
-        public async Task<Response<bool>> UpdateCustomerAsync(CustomersDto customerDTO)
-        {   
+        public async Task<Response<bool>> UpdateCustomerAsync(CustomerDto customerDTO)
+        {
             var response = new Response<bool>();
             try
             {
-                var customerEntity = _mapper.Map<Customers>(customerDTO);
-                 response.Data = await _unitOfWork.customersRepository.UpdateAsync(customerEntity);
+                var customerEntity = _mapper.Map<Customer>(customerDTO);
+                response.Data = await _unitOfWork.customersRepository.UpdateAsync(customerEntity);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -293,11 +293,11 @@ namespace Pacagroup.Ecommerce.Application.UseCase
                     _logger.LogInformation("Customer actualizado correctamente");
                 }
             }
-                catch (Exception ex)
+            catch (Exception ex)
             {
-                 response.IsSuccess = false;
-                 response.Message = ex.Message;
-                    _logger.LogError(ex.Message);
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }

@@ -7,7 +7,7 @@ using Pacagroup.Ecommerce.Transversal.Common;
 
 using System;
 
-namespace Pacagroup.Ecommerce.Application.UseCase
+namespace Pacagroup.Ecommerce.Application.UseCase.Users
 {
     public class UsersApplication : IUsersApplication
     {
@@ -21,10 +21,10 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             _userDtoValidator = userDtoValidator;
         }
 
-        public Response<UsersDTO> Authenticate(string userName, string password)
+        public Response<UserDTO> Authenticate(string userName, string password)
         {
-            var response = new Response<UsersDTO>();
-            var validation = _userDtoValidator.Validate(new UsersDTO() { UserName = userName, Password = password });
+            var response = new Response<UserDTO>();
+            var validation = _userDtoValidator.Validate(new UserDTO() { UserName = userName, Password = password });
             if (!validation.IsValid)
             {
                 response.Message = "Error de validación";
@@ -33,7 +33,7 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             }
             try
             {
-                response.Data = _mapper.Map<UsersDTO>(_unitOfWork.usersRepository.Authenticate(userName, password));
+                response.Data = _mapper.Map<UserDTO>(_unitOfWork.usersRepository.Authenticate(userName, password));
                 if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
                 {
                     response.Message = "Username or password is empty";
@@ -43,7 +43,7 @@ namespace Pacagroup.Ecommerce.Application.UseCase
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
-                }                
+                }
             }
             catch (InvalidOperationException)
             {
@@ -53,7 +53,7 @@ namespace Pacagroup.Ecommerce.Application.UseCase
             catch (Exception e)
             {
                 response.IsSuccess = false;
-                response.Message = e.Message;                
+                response.Message = e.Message;
             }
             return response;
         }
