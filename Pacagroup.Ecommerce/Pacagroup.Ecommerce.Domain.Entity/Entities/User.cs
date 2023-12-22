@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pacagroup.Ecommerce.Domain.Entity
+namespace Pacagroup.Ecommerce.Domain.Entities
 {
     public class User
     {
@@ -10,7 +10,7 @@ namespace Pacagroup.Ecommerce.Domain.Entity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
-        public string Password { get; set; }        
+        public string Password { get; set; }
         public string Token { get; set; }
     }
 }

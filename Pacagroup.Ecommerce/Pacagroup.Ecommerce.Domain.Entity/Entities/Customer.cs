@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pacagroup.Ecommerce.Domain.Entity
+namespace Pacagroup.Ecommerce.Domain.Entities
 {
     public class Customer
     {
