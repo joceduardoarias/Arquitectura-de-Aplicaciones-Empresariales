@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Pacagroup.Ecommerce.Domain.Entity;
 using System.Data;
 using Dapper;
 using Pacagroup.Ecommerce.Persistence.Context;
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
+using Pacagroup.Ecommerce.Domain.Entities;
 
 namespace Pacagroup.Ecommerce.Persistence.Repositories
 {

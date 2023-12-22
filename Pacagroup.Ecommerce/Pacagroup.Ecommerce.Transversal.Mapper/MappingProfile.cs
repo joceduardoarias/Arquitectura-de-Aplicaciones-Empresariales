@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Pacagroup.Ecommerce.Application.DTO;
+using Pacagroup.Ecommerce.Domain.Entities;
 using Pacagroup.Ecommerce.Domain.Entity;
 
 namespace Pacagroup.Ecommerce.Transversal.Mapper
