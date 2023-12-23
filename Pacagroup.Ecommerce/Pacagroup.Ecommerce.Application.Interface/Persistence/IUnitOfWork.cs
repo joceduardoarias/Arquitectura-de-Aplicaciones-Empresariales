@@ -7,5 +7,7 @@ namespace Pacagroup.Ecommerce.Application.Interface.Persistence
         ICustomersRepository customersRepository { get; }
         IUsersRepository usersRepository { get; }
         ICategoriesRepository categoriesRepository { get; }
+        IDiscountRepository discountRepository { get; }
+        Task<int> Save(CancellationToken cancellationToken);    
     }
 }

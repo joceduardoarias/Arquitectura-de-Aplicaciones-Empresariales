@@ -8,7 +8,7 @@ using Pacagroup.Ecommerce.Persistence.Repositories;
 
 namespace Pacagroup.Ecommerce.Persistence
 {
-    public static class ConfigureServices
+    public static class ConfigureServices 
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
@@ -23,6 +23,7 @@ namespace Pacagroup.Ecommerce.Persistence
             services.AddScoped<IUsersRepository, UserRepository>();
             services.AddScoped<ICustomersRepository, CustomerRepository>();
             services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+            services.AddScoped<IDiscountRepository, DiscountRespository>();
             return services;
         }
     }
