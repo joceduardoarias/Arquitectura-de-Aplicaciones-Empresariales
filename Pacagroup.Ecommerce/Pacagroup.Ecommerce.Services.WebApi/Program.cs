@@ -5,11 +5,9 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Feature;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.HealthCheck;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Injection;
-using Pacagroup.Ecommerce.Services.WebApi.Modules.Mapper;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.RateLimiterExtensions;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Redis;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
-using Pacagroup.Ecommerce.Services.WebApi.Modules.Validator;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Watch;
 using Pacagroup.Ecommerce.Persistence;
 using Pacagroup.Ecommerce.Application.UseCase;
@@ -21,8 +19,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Auto Mapper Configurations
-builder.Services.AddMapper();
 // Configure Cors policy
 builder.Services.AddFeatures(builder.Configuration);
 // Configure Persistence services
@@ -35,8 +31,6 @@ builder.Services.AddInjection(builder.Configuration);
 builder.Services.AddAuthentication(builder.Configuration);
 // Register the swagger generator, defining 1 or more Swagger documents
 builder.Services.AddSwagger();
-// Configure Validators
-builder.Services.AddValidator();
 // Configure HealthCheck
 builder.Services.AddHealthCheck(builder.Configuration);
 // Register WatchDog
