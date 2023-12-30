@@ -11,6 +11,7 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Watch;
 using Pacagroup.Ecommerce.Persistence;
 using Pacagroup.Ecommerce.Application.UseCase;
+using Pacagroup.Ecommerce.Infrastructure;
 using WatchDog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,8 @@ builder.Services.AddHealthCheck(builder.Configuration);
 builder.Services.AddWatchDog(builder.Configuration);
 // Register Redis
 builder.Services.AddRedisCache(builder.Configuration);
+// Register RabbitMQ
+builder.Services.AddInfrastructureServices();
 // Register RateLimit
 builder.Services.AddRateLimiting(builder.Configuration);
 // Register the API versioning services
