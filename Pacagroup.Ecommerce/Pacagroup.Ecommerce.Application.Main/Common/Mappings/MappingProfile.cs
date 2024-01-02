@@ -2,6 +2,7 @@
 using Pacagroup.Ecommerce.Application.DTO;
 using Pacagroup.Ecommerce.Domain.Entities;
 using Pacagroup.Ecommerce.Domain.Entity;
+using Pacagroup.Ecommerce.Domain.Events;
 
 namespace Pacagroup.Ecommerce.Application.Common.Mappings
 {
@@ -13,6 +14,7 @@ namespace Pacagroup.Ecommerce.Application.Common.Mappings
             CreateMap<User,UserDTO>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Discount, DiscountDto>().ReverseMap();
+            CreateMap<DiscountCreatedEvent, Discount>().ReverseMap();
         }
     }
 }

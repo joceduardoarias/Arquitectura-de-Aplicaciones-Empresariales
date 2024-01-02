@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Pacagroup.Ecommerce.Application.DTO;
+using Pacagroup.Ecommerce.Application.Interface.Infrastructure;
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
 using Pacagroup.Ecommerce.Application.Interface.UseCase;
 using Pacagroup.Ecommerce.Application.Validator;
 using Pacagroup.Ecommerce.Domain.Entities;
+using Pacagroup.Ecommerce.Domain.Events;
 using Pacagroup.Ecommerce.Transversal.Common;
 
 namespace Pacagroup.Ecommerce.Application.UseCase.Discounts
@@ -13,14 +15,16 @@ namespace Pacagroup.Ecommerce.Application.UseCase.Discounts
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IloggerApp<DiscountsApplication> _logger;
+        private readonly IEventBus _eventBus;
         private readonly DiscountDotValidator _discountDtoValidator;
 
-        public DiscountsApplication(IUnitOfWork unitOfWork, IMapper mapper, IloggerApp<DiscountsApplication> logger, DiscountDotValidator discountDtoValidator)
+        public DiscountsApplication(IUnitOfWork unitOfWork, IMapper mapper, IloggerApp<DiscountsApplication> logger, DiscountDotValidator discountDtoValidator, IEventBus eventBus)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _discountDtoValidator = discountDtoValidator;
+            _eventBus = eventBus;
         }
 
         public async Task<Response<bool>> Create(DiscountDto discountDto, CancellationToken CancellationToken = default)
@@ -47,7 +51,12 @@ namespace Pacagroup.Ecommerce.Application.UseCase.Discounts
                 {
                     response.IsSuccess = true;
                     response.Message = "Success";
-                    _logger.LogInformation("Discount creado correctamente");                    
+                    _logger.LogInformation("Discount creado correctamente");
+                    
+                    /*Publicar el evento*/
+                    var discountCreatedEvent = _mapper.Map<DiscountCreatedEvent>(discountEntity);
+                    _eventBus.Publish(discountCreatedEvent);
+                    _logger.LogInformation("Publicar evento Discount created");
                 }
                
             }
