@@ -66,18 +66,25 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
     app.UseSwagger();
-
     app.UseSwaggerUI(options =>
     {
         // build a swagger endpoint for each discover API version
-        var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+        
         foreach (var description in provider.ApiVersionDescriptions)
         {
             options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
         }
     });
-
+    app.UseReDoc(options =>
+    {
+        options.DocumentTitle = "Pacagruop Tencnology services API Market";
+        foreach (var description in provider.ApiVersionDescriptions)
+        {
+            options.SpecUrl = $"/swagger/{description.GroupName}/swagger.json";
+        }
+    });
 }
 
 app.UseWatchDogExceptionLogger();
