@@ -11,6 +11,7 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Watch;
 using Pacagroup.Ecommerce.Persistence;
 using Pacagroup.Ecommerce.Application.UseCase;
+using Pacagroup.Ecommerce.Infrastructure;
 using WatchDog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,8 @@ builder.Services.AddHealthCheck(builder.Configuration);
 builder.Services.AddWatchDog(builder.Configuration);
 // Register Redis
 builder.Services.AddRedisCache(builder.Configuration);
+// Register RabbitMQ
+builder.Services.AddInfrastructureServices();
 // Register RateLimit
 builder.Services.AddRateLimiting(builder.Configuration);
 // Register the API versioning services
@@ -63,18 +66,25 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
     app.UseSwagger();
-
     app.UseSwaggerUI(options =>
     {
         // build a swagger endpoint for each discover API version
-        var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+        
         foreach (var description in provider.ApiVersionDescriptions)
         {
             options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
         }
     });
-
+    app.UseReDoc(options =>
+    {
+        options.DocumentTitle = "Pacagruop Tencnology services API Market";
+        foreach (var description in provider.ApiVersionDescriptions)
+        {
+            options.SpecUrl = $"/swagger/{description.GroupName}/swagger.json";
+        }
+    });
 }
 
 app.UseWatchDogExceptionLogger();

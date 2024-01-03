@@ -1,0 +1,20 @@
+RabbitMQ
+comando crear imagen y ejecutar en docker:
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management
+http://localhost:15672/
+user: guest
+password: guest
+docker start rabbitmq
+docker stop rabbitmq
+docker restart rabbitmq
+
+Redis
+commando de instalación Redis en Docker: 
+docker image pull redis/redis-stack:latest
+Crear la imagen en Docker:  
+docker run -d --name redis-stack -e REDIS_ARGS="--requirepass 123456" -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+http://localhost:8001/redis-stack/browser
+iniciar el contenedor
+docker start redis-stack
+docker stop redis-stack
+docker restart redis-stack 

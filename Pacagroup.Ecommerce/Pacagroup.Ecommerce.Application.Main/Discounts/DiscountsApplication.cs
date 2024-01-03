@@ -1,28 +1,33 @@
 ﻿using AutoMapper;
 using Pacagroup.Ecommerce.Application.DTO;
+using Pacagroup.Ecommerce.Application.Interface.Infrastructure;
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
 using Pacagroup.Ecommerce.Application.Interface.UseCase;
 using Pacagroup.Ecommerce.Application.Validator;
 using Pacagroup.Ecommerce.Domain.Entities;
+using Pacagroup.Ecommerce.Domain.Events;
 using Pacagroup.Ecommerce.Transversal.Common;
 
 namespace Pacagroup.Ecommerce.Application.UseCase.Discounts;
 
 public class DiscountsApplication : IDiscountsApplication
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-    private readonly IloggerApp<DiscountsApplication> _logger;
-    private readonly DiscountDotValidator _discountDtoValidator;
 
-    public DiscountsApplication(IUnitOfWork unitOfWork, IMapper mapper, IloggerApp<DiscountsApplication> logger, DiscountDotValidator discountDtoValidator)
-    {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-        _logger = logger;
-        _discountDtoValidator = discountDtoValidator;
-    }
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        private readonly IloggerApp<DiscountsApplication> _logger;
+        private readonly IEventBus _eventBus;
+        private readonly DiscountDotValidator _discountDtoValidator;
 
+        public DiscountsApplication(IUnitOfWork unitOfWork, IMapper mapper, IloggerApp<DiscountsApplication> logger, DiscountDotValidator discountDtoValidator, IEventBus eventBus)
+        {
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _logger = logger;
+            _discountDtoValidator = discountDtoValidator;
+            _eventBus = eventBus;
+        }   
+        
     public async Task<Response<bool>> Create(DiscountDto discountDto, CancellationToken CancellationToken = default)
     {
         var response = new Response<bool>();
@@ -33,22 +38,36 @@ public class DiscountsApplication : IDiscountsApplication
             
             if (!validation.IsValid)
             {
-                response.Message = "Error de validación";
-                response.Errors = validation.Errors;
-                return response;
+
+                var validation = await _discountDtoValidator.ValidateAsync(discountDto, CancellationToken);
+                
+                if (!validation.IsValid)
+                {
+                    response.Message = "Error de validación";
+                    response.Errors = validation.Errors;
+                    return response;
+                }
+                
+                var discountEntity = _mapper.Map<Discount>(discountDto);
+                await _unitOfWork.discountRepository.InsertAsync(discountEntity);
+
+                response.Data = await _unitOfWork.Save(CancellationToken)>0; /* Si es mayor a 0 es true */  //TODO buscar como mejorar este control.
+                    
+                if (response.Data is true)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Success";
+                    _logger.LogInformation("Discount creado correctamente");
+                    
+                    /*Publicar el evento*/
+                    var discountCreatedEvent = _mapper.Map<DiscountCreatedEvent>(discountEntity);
+                    _eventBus.Publish(discountCreatedEvent);
+                    _logger.LogInformation("Publicar evento Discount created");
+                }
+               
             }
             
-            var discountEntity = _mapper.Map<Discount>(discountDto);
-            await _unitOfWork.discountRepository.InsertAsync(discountEntity);
-
-            response.Data = await _unitOfWork.Save(CancellationToken)>0; /* Si es mayor a 0 es true */  //TODO buscar como mejorar este control.
-                
-            if (response.Data is true)
-            {
-                response.IsSuccess = true;
-                response.Message = "Success";
-                _logger.LogInformation("Discount creado correctamente");                    
-            }
+           
            
         }
         catch (Exception ex)
