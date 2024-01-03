@@ -2,6 +2,7 @@
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
 using Pacagroup.Ecommerce.Domain.Entities;
 using Pacagroup.Ecommerce.Persistence.Context;
+using Pacagroup.Ecommerce.Persistence.Mocks;
 
 namespace Pacagroup.Ecommerce.Persistence.Repositories
 {
@@ -46,9 +47,9 @@ namespace Pacagroup.Ecommerce.Persistence.Repositories
         #endregion
 
         #region Métodos Asincronos
-        public Task<int> CountAsync()
+        public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => 1000); //La cantidad de regitros.
         }        
         public async Task<bool> DeleteAsync(string Id)
         {
@@ -73,9 +74,12 @@ namespace Pacagroup.Ecommerce.Persistence.Repositories
         {
             return await _applicationDbContext.Set<Discount>().AsNoTracking().ToListAsync(cancellationToken);                
         }        
-        public Task<IEnumerable<Discount>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Discount>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            var faker = new DiscountGetAllWithPaginationAsyncBogusConfig();
+            var result = await Task.Run(() => faker.Generate(1000)); // Se están generando 1000 registros fake.
+
+            return result.Skip((pageNumber - 1) * pageSize).Take(pageSize); // Agregando paginación a la respuesta.                                                         
         }
         public async Task<Discount> GetAsycn(int id, CancellationToken cancellationToken = default)
         {

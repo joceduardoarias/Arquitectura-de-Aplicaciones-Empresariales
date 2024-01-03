@@ -84,4 +84,10 @@ public class DiscountsController : Controller
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
+    [HttpGet("GetDiscountsWithPaginationAsync")]
+    public async Task<IActionResult> GetDiscountsWithPaginationAsync([FromQuery] int pageNumber, int pageSize)
+    {
+        var discounts = await _discountsApplication.GetAllWithPaginationAsync(pageNumber, pageSize);
+        return Ok(discounts);
+    }
 }
