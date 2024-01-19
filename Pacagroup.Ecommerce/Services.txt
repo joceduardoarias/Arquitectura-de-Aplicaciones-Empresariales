@@ -18,3 +18,8 @@ iniciar el contenedor
 docker start redis-stack
 docker stop redis-stack
 docker restart redis-stack 
+
+Servicio SMTP de envio de emails
+
+https://ethereal.email/   Crear una cuenta de correo para testear, ademas se deben remplzar en appSettings
+los campos necesario para que se envíe el mail.

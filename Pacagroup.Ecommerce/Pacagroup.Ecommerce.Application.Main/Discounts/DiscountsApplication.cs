@@ -7,6 +7,7 @@ using Pacagroup.Ecommerce.Application.Validator;
 using Pacagroup.Ecommerce.Domain.Entities;
 using Pacagroup.Ecommerce.Domain.Events;
 using Pacagroup.Ecommerce.Transversal.Common;
+using System.Text.Json;
 
 namespace Pacagroup.Ecommerce.Application.UseCase.Discounts;
 
@@ -18,19 +19,23 @@ public class DiscountsApplication : IDiscountsApplication
         private readonly IloggerApp<DiscountsApplication> _logger;
         private readonly IEventBus _eventBus;
         private readonly DiscountDotValidator _discountDtoValidator;
-
-        public DiscountsApplication(IUnitOfWork unitOfWork, IMapper mapper, IloggerApp<DiscountsApplication> logger, DiscountDotValidator discountDtoValidator, IEventBus eventBus)
+        private readonly INotification _notification;
+        public DiscountsApplication(IUnitOfWork unitOfWork, IMapper mapper, IloggerApp<DiscountsApplication> logger, DiscountDotValidator discountDtoValidator, IEventBus eventBus, INotification notification)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _discountDtoValidator = discountDtoValidator;
             _eventBus = eventBus;
-        }   
+            _notification = notification;
+        }
+
+        
         
     public async Task<Response<bool>> Create(DiscountDto discountDto, CancellationToken CancellationToken = default)
     {
         var response = new Response<bool>();
+
 
         try
         {
@@ -63,6 +68,9 @@ public class DiscountsApplication : IDiscountsApplication
                     var discountCreatedEvent = _mapper.Map<DiscountCreatedEvent>(discountEntity);
                     _eventBus.Publish(discountCreatedEvent);
                     _logger.LogInformation("Publicar evento Discount created");
+
+                    /*Enviar Correo*/
+                    await _notification.SendMailAsync(response.Message, JsonSerializer.Serialize(discountEntity), CancellationToken);
                 }
                
             }
