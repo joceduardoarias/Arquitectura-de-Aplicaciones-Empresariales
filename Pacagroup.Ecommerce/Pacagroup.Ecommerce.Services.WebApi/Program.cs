@@ -38,8 +38,8 @@ builder.Services.AddHealthCheck(builder.Configuration);
 builder.Services.AddWatchDog(builder.Configuration);
 // Register Redis
 builder.Services.AddRedisCache(builder.Configuration);
-// Register RabbitMQ
-builder.Services.AddInfrastructureServices();
+// Register RabbitMQ, Mail Srevice
+builder.Services.AddInfrastructureServices(builder.Configuration);
 // Register RateLimit
 builder.Services.AddRateLimiting(builder.Configuration);
 // Register the API versioning services
