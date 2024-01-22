@@ -140,7 +140,7 @@ namespace Pacagroup.Ecommerce.Persistence.Repositories
                 parameters.Add("CustomerID", customer.CustomerId);
                 parameters.Add("CompanyName", customer.CompanyName);
                 parameters.Add("ContactName", customer.ContactName);
-                parameters.Add("ContactTittle", customer.ContactTitle);
+                parameters.Add("ContactTitle", customer.ContactTitle);
                 parameters.Add("Address", customer.Address);
                 parameters.Add("City", customer.City);
                 parameters.Add("Region", customer.Region);
@@ -149,7 +149,8 @@ namespace Pacagroup.Ecommerce.Persistence.Repositories
                 parameters.Add("Phone", customer.Phone);
                 parameters.Add("Fax", customer.Fax);
 
-                var rs = await connection.ExecuteAsync(query, commandType: CommandType.StoredProcedure);
+                var rs = await connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);
+
                 return rs > 0;
             }
         }

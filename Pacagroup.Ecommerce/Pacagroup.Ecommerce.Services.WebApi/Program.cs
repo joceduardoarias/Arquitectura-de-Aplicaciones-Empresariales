@@ -11,10 +11,12 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
 using Pacagroup.Ecommerce.Persistence;
 using Pacagroup.Ecommerce.Application.UseCase;
 using Pacagroup.Ecommerce.Infrastructure;
+using Pacagroup.Ecommerce.Services.WebApi.Modules.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Servicios para creación de aplicaciones Web API
+// Servicios para creaciÃ³n de aplicaciones Web API
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -96,5 +98,7 @@ app.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks
     Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
+
+app.AddMiddleware();
 
 app.Run();
