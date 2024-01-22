@@ -13,6 +13,7 @@ using Pacagroup.Ecommerce.Persistence;
 using Pacagroup.Ecommerce.Application.UseCase;
 using Pacagroup.Ecommerce.Infrastructure;
 using WatchDog;
+using Pacagroup.Ecommerce.Services.WebApi.Modules.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -106,5 +107,7 @@ app.UseWatchDog(option =>
     option.WatchPageUsername = builder.Configuration["WatchDog:WatchPageUsername"];
     option.WatchPagePassword = builder.Configuration["WatchDog:WatchPagePassword"];
 });
+
+app.AddMiddleware();
 
 app.Run();
