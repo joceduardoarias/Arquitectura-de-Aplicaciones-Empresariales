@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pacagroup.Ecommerce.Transversal.Common;
-using WatchDog;
+
 
 namespace Pacagroup.Ecommerce.Transversal.Logging;
 
@@ -13,17 +13,14 @@ public class LoggerAdapter<T> : IloggerApp<T>
     }
     public void LogError(string message, params object[] args)
     {
-        _logger.LogError(message, args);
-        WatchLogger.Log(message);//Log que se guarda en la base de datos
+        _logger.LogError(message, args);        
     }
     public void LogWarning(string message, params object[] args)
     {
-        _logger.LogWarning(message, args);
-        WatchLogger.Log(message);
+        _logger.LogWarning(message, args);        
     }
     public void LogInformation(string message, params object[] args)
     {
-        _logger.LogInformation(message, args);
-        WatchLogger.Log(message);
+        _logger.LogInformation(message, args);        
     }
 }
