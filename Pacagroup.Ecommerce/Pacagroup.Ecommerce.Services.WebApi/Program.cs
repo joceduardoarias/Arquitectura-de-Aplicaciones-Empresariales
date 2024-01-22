@@ -8,16 +8,15 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Injection;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.RateLimiterExtensions;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Redis;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
-using Pacagroup.Ecommerce.Services.WebApi.Modules.Watch;
 using Pacagroup.Ecommerce.Persistence;
 using Pacagroup.Ecommerce.Application.UseCase;
 using Pacagroup.Ecommerce.Infrastructure;
-using WatchDog;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Servicios para creación de aplicaciones Web API
+// Servicios para creaciÃ³n de aplicaciones Web API
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -35,12 +34,11 @@ builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddSwagger();
 // Configure HealthCheck
 builder.Services.AddHealthCheck(builder.Configuration);
-// Register WatchDog
-builder.Services.AddWatchDog(builder.Configuration);
+
 // Register Redis
 builder.Services.AddRedisCache(builder.Configuration);
-// Register RabbitMQ
-builder.Services.AddInfrastructureServices();
+// Register RabbitMQ, Mail Srevice
+builder.Services.AddInfrastructureServices(builder.Configuration);
 // Register RateLimit
 builder.Services.AddRateLimiting(builder.Configuration);
 // Register the API versioning services
@@ -88,24 +86,17 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseWatchDogExceptionLogger();
 app.UseHttpsRedirection();
 app.UseCors("_myAllowSpecificOrigins");
-app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints(_ => { });
+app.UseRateLimiter();
 app.MapControllers();
 app.MapHealthChecksUI();
 app.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
 {
     Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
-app.UseWatchDog(option =>
-{
-    option.WatchPageUsername = builder.Configuration["WatchDog:WatchPageUsername"];
-    option.WatchPagePassword = builder.Configuration["WatchDog:WatchPagePassword"];
 });
 
 app.AddMiddleware();
