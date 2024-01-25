@@ -16,7 +16,7 @@ namespace Pacagroup.Ecommerce.Persistence.Repositories
             _context = context;
         }
 
-        public User Authenticate(string userName, string password)
+        public async Task<User> Authenticate(string userName, string password)
         {
             using (var connection = _context.CreateConnection())
             {
@@ -25,7 +25,7 @@ namespace Pacagroup.Ecommerce.Persistence.Repositories
                 parameters.Add("UserName", userName);
                 parameters.Add("Password", password);
 
-                var user = connection.QuerySingle<User>(query, param: parameters, commandType: CommandType.StoredProcedure);
+                var user = connection.QuerySingleOrDefault<User>(query, param: parameters, commandType: CommandType.StoredProcedure);
                 return user;
             }
         }

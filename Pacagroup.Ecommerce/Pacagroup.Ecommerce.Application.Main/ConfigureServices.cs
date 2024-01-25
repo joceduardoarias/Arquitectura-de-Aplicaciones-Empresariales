@@ -13,7 +13,11 @@ namespace Pacagroup.Ecommerce.Application.UseCase
     public static class ConfigureServices
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
-        {   
+        {
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()); //Registrando el servicio MediatR
+            });
             services.AddAutoMapper(Assembly.GetExecutingAssembly()); //En tiempo de ejecución descubre la clases que se van a mapear.
             services.AddScoped<IUsersApplication, UsersApplication>();
             services.AddScoped<ICustomerApplication, CustomerApplication>();

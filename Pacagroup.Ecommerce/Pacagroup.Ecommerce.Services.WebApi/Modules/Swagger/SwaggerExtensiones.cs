@@ -15,11 +15,20 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger
             // Register the swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
+                // Documento para la versión 1
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Service API Market",
-                    Description = "A simple example ASP.NET Core web API",
-                    Version = "v1"
+                    Version = "v1",
+                    Description = "A simple example ASP.NET Core web API for version 1"
+                });
+
+                // Documento para la versión 2
+                c.SwaggerDoc("v2", new OpenApiInfo
+                {
+                    Title = "Service API Market",
+                    Version = "v2",
+                    Description = "A simple example ASP.NET Core web API for version 2"
                 });
                 // Set the comments path for the swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
