@@ -39,44 +39,35 @@ public class DiscountsApplication : IDiscountsApplication
 
         try
         {
-            var validation = await _discountDtoValidator.ValidateAsync(discountDto, CancellationToken);
-            
+            var validation = await _discountDtoValidator.ValidateAsync(discountDto, CancellationToken);                        
+                
             if (!validation.IsValid)
             {
-
-                var validation = await _discountDtoValidator.ValidateAsync(discountDto, CancellationToken);
-                
-                if (!validation.IsValid)
-                {
-                    response.Message = "Error de validación";
-                    response.Errors = validation.Errors;
-                    return response;
-                }
-                
-                var discountEntity = _mapper.Map<Discount>(discountDto);
-                await _unitOfWork.discountRepository.InsertAsync(discountEntity);
-
-                response.Data = await _unitOfWork.Save(CancellationToken)>0; /* Si es mayor a 0 es true */  //TODO buscar como mejorar este control.
-                    
-                if (response.Data is true)
-                {
-                    response.IsSuccess = true;
-                    response.Message = "Success";
-                    _logger.LogInformation("Discount creado correctamente");
-                    
-                    /*Publicar el evento*/
-                    var discountCreatedEvent = _mapper.Map<DiscountCreatedEvent>(discountEntity);
-                    _eventBus.Publish(discountCreatedEvent);
-                    _logger.LogInformation("Publicar evento Discount created");
-
-                    /*Enviar Correo*/
-                    await _notification.SendMailAsync(response.Message, JsonSerializer.Serialize(discountEntity), CancellationToken);
-                }
-               
+                response.Message = "Error de validación";
+                response.Errors = validation.Errors;
+                return response;
             }
-            
-           
-           
+                
+            var discountEntity = _mapper.Map<Discount>(discountDto);
+            await _unitOfWork.discountRepository.InsertAsync(discountEntity);
+
+            response.Data = await _unitOfWork.Save(CancellationToken)>0; /* Si es mayor a 0 es true */  //TODO buscar como mejorar este control.
+                    
+            if (response.Data is true)
+            {
+                response.IsSuccess = true;
+                response.Message = "Success";
+                _logger.LogInformation("Discount creado correctamente");
+                    
+                /*Publicar el evento*/
+                var discountCreatedEvent = _mapper.Map<DiscountCreatedEvent>(discountEntity);
+                _eventBus.Publish(discountCreatedEvent);
+                _logger.LogInformation("Publicar evento Discount created");
+
+                /*Enviar Correo*/
+                await _notification.SendMailAsync(response.Message, JsonSerializer.Serialize(discountEntity), CancellationToken);
+            }
+                                                            
         }
         catch (Exception ex)
         {
