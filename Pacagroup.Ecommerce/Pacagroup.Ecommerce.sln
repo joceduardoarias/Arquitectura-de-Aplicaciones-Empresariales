@@ -27,11 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pacagroup.Ecommerce.Applica
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pacagroup.Ecommerce.Application.Validator", "Pacagroup.Ecommerce.Application.Validator\Pacagroup.Ecommerce.Application.Validator.csproj", "{F7EF1B02-5B75-465B-98E0-7988B5D2DB8A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pacagroup.Ecommerce.Transversal.Logging", "Pacagroup.Ecommerce.Transversal.Logging\Pacagroup.Ecommerce.Transversal.Logging.csproj", "{3B68D33E-94EB-4A65-B8C9-B4665A83B0B0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pacagroup.Ecommerce.Persistence", "Pacagroup.Ecommerce.Persistence\Pacagroup.Ecommerce.Persistence.csproj", "{28E98ED2-E34D-4077-A6E5-36DCBD4457C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pacagroup.Ecommerce.Infrastructure", "Pacagroup.Ecommerce.Infrastructure\Pacagroup.Ecommerce.Infrastructure.csproj", "{917A13F9-F1AC-4E83-B931-E7E6482FBB79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pacagroup.Ecommerce.Infrastructure", "Pacagroup.Ecommerce.Infrastructure\Pacagroup.Ecommerce.Infrastructure.csproj", "{917A13F9-F1AC-4E83-B931-E7E6482FBB79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +65,6 @@ Global
 		{F7EF1B02-5B75-465B-98E0-7988B5D2DB8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7EF1B02-5B75-465B-98E0-7988B5D2DB8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7EF1B02-5B75-465B-98E0-7988B5D2DB8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B68D33E-94EB-4A65-B8C9-B4665A83B0B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B68D33E-94EB-4A65-B8C9-B4665A83B0B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B68D33E-94EB-4A65-B8C9-B4665A83B0B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B68D33E-94EB-4A65-B8C9-B4665A83B0B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{28E98ED2-E34D-4077-A6E5-36DCBD4457C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{28E98ED2-E34D-4077-A6E5-36DCBD4457C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28E98ED2-E34D-4077-A6E5-36DCBD4457C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,7 +85,6 @@ Global
 		{98C54245-3065-40EF-98C9-1A23B481D2F4} = {E76FEF52-1171-46B4-9359-1EDD715AF929}
 		{19108D26-C2EB-4EAC-89B3-B15C17D2A3B9} = {40ABDB65-257A-4C8B-A35C-C72EE64346CA}
 		{F7EF1B02-5B75-465B-98E0-7988B5D2DB8A} = {40ABDB65-257A-4C8B-A35C-C72EE64346CA}
-		{3B68D33E-94EB-4A65-B8C9-B4665A83B0B0} = {37ECDAF7-5DBE-4EF1-98F8-5BABC6A432BE}
 		{28E98ED2-E34D-4077-A6E5-36DCBD4457C6} = {2216AB34-8C98-44BC-B66D-E7BD79EF2EE4}
 		{917A13F9-F1AC-4E83-B931-E7E6482FBB79} = {2216AB34-8C98-44BC-B66D-E7BD79EF2EE4}
 	EndGlobalSection

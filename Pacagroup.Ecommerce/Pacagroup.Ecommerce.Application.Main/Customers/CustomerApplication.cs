@@ -4,6 +4,7 @@ using Pacagroup.Ecommerce.Transversal.Common;
 using Pacagroup.Ecommerce.Application.Interface.UseCase;
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
 using Pacagroup.Ecommerce.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Pacagroup.Ecommerce.Application.UseCase.Customers
 {
@@ -11,8 +12,8 @@ namespace Pacagroup.Ecommerce.Application.UseCase.Customers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IloggerApp<CustomerApplication> _logger;
-        public CustomerApplication(IUnitOfWork customerDomain, IMapper mapper, IloggerApp<CustomerApplication> logger)
+        private readonly ILogger<CustomerApplication> _logger;
+        public CustomerApplication(IUnitOfWork customerDomain, IMapper mapper, ILogger<CustomerApplication> logger)
         {
             _unitOfWork = customerDomain;
             _mapper = mapper;
