@@ -1,6 +1,10 @@
 RabbitMQ
 comando crear imagen y ejecutar en docker:
-docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management
+docker run -d --hostname my-rabbitmq --name my-rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+
+** --rm: Hace que Docker elimine automáticamente el contenedor cuando se detenga**
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management  
+
 http://localhost:15672/
 user: guest
 password: guest
@@ -23,3 +27,11 @@ Servicio SMTP de envio de emails
 
 https://ethereal.email/   Crear una cuenta de correo para testear, ademas se deben remplzar en appSettings
 los campos necesario para que se envíe el mail.
+
+SQL Server en Docker
+Para instalar y ejecutar un contenedor de SQL Server en Docker, primero debes asegurarte de que Docker esté instalado en tu sistema. 
+Luego puedes usar el siguiente comando para ejecutar SQL Server en Docker:
+
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=castillo2030*" -p 1433:1433 --name sql1 --hostname sql1 -d mcr.microsoft.com/mssql/server:2019-latest
+
+Reemplaza YourStrong(!)Password con una contraseña segura que desees.
