@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
+using Microsoft.Extensions.Logging;
 
 namespace Pacagroup.Ecommerce.Application.UseCase.Categories
 {
@@ -17,10 +18,10 @@ namespace Pacagroup.Ecommerce.Application.UseCase.Categories
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IloggerApp<CategoriesApplication> _logger;
+        private readonly ILogger<CategoriesApplication> _logger;
         private readonly IDistributedCache _distributedCache;
 
-        public CategoriesApplication(IUnitOfWork categories, IMapper mapper, IloggerApp<CategoriesApplication> logger, IDistributedCache distributedCache)
+        public CategoriesApplication(IUnitOfWork categories, IMapper mapper, ILogger<CategoriesApplication> logger, IDistributedCache distributedCache)
         {
             _unitOfWork = categories;
             _mapper = mapper;

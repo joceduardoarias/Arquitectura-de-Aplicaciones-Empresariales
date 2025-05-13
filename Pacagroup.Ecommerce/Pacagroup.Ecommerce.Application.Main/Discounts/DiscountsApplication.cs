@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Pacagroup.Ecommerce.Application.DTO;
 using Pacagroup.Ecommerce.Application.Interface.Infrastructure;
 using Pacagroup.Ecommerce.Application.Interface.Persistence;
@@ -16,11 +17,11 @@ public class DiscountsApplication : IDiscountsApplication
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IloggerApp<DiscountsApplication> _logger;
+        private readonly ILogger<DiscountsApplication> _logger;
         private readonly IEventBus _eventBus;
         private readonly DiscountDotValidator _discountDtoValidator;
         private readonly INotification _notification;
-        public DiscountsApplication(IUnitOfWork unitOfWork, IMapper mapper, IloggerApp<DiscountsApplication> logger, DiscountDotValidator discountDtoValidator, IEventBus eventBus, INotification notification)
+        public DiscountsApplication(IUnitOfWork unitOfWork, IMapper mapper, ILogger<DiscountsApplication> logger, DiscountDotValidator discountDtoValidator, IEventBus eventBus, INotification notification)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
