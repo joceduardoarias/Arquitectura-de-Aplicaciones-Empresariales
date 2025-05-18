@@ -27,8 +27,6 @@ RUN dotnet build "./Pacagroup.Ecommerce.Services.WebApi.csproj" -c $BUILD_CONFIG
 
 # Esta fase se usa para publicar el proyecto de servicio que se copiará en la fase final.
 FROM build AS publish
-COPY wait-for-it.sh ./wait-for-it.sh
-RUN chmod +x ./wait-for-it.sh
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./Pacagroup.Ecommerce.Services.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
@@ -36,7 +34,6 @@ RUN dotnet publish "./Pacagroup.Ecommerce.Services.WebApi.csproj" -c $BUILD_CONF
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=publish /src/wait-for-it.sh /wait-for-it.sh
 
 # Instala OpenTelemetry AutoInstrumentation en tiempo de ejecución
 USER root
@@ -52,4 +49,5 @@ USER app
 
 
 # ✅ Ejecutar el script antes de iniciar la app
-ENTRYPOINT ["/wait-for-it.sh", "sql1:1433", "-t", "60", "--", "dotnet", "Pacagroup.Ecommerce.Services.WebApi.dll"]
+ENTRYPOINT ["dotnet", "Pacagroup.Ecommerce.Services.WebApi.dll"]
+
