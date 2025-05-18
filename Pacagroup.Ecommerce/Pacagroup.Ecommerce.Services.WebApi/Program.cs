@@ -12,6 +12,8 @@ using Pacagroup.Ecommerce.Persistence;
 using Pacagroup.Ecommerce.Application.UseCase;
 using Pacagroup.Ecommerce.Infrastructure;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Middleware;
+using Pacagroup.Ecommerce.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +35,7 @@ builder.Services.AddAuthentication(builder.Configuration);
 // Register the swagger generator, defining 1 or more Swagger documents
 builder.Services.AddSwagger();
 // Configure HealthCheck
-builder.Services.AddHealthCheck(builder.Configuration);
+//builder.Services.AddHealthCheck(builder.Configuration);
 
 // Register Redis
 builder.Services.AddRedisCache(builder.Configuration);
@@ -59,6 +61,26 @@ builder.Services.AddVersionedApiExplorer(options =>
 });
 
 var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        try
+        {
+            var db = services.GetRequiredService<ApplicationDbContext>();
+            db.Database.Migrate();
+        }
+        catch (Exception ex)
+        {
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            logger.LogError(ex, "Error applying migrations");
+            throw; // o registrar y continuar si no querés detener la app
+        }
+    }
+}
+
+
 
 // Configure the http request pipelne
 
@@ -70,7 +92,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         // build a swagger endpoint for each discover API version
-        
+
         foreach (var description in provider.ApiVersionDescriptions)
         {
             options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
@@ -92,12 +114,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseRateLimiter();
 app.MapControllers();
-app.MapHealthChecksUI();
-app.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
-{
-    Predicate = _ => true,
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+app.MapHealthChecks("/health");
 
 app.AddMiddleware();
 
