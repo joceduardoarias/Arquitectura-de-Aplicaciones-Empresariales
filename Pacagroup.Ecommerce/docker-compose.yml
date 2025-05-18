@@ -10,7 +10,7 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Castillo2030*
     volumes:
-      - ./restore_northwind.sql:/docker-entrypoint-initdb.d/restore_northwind.sql
+      - sqlserver_data:/var/opt/mssql
     healthcheck:
       test: >-
         /opt/mssql-tools/bin/sqlcmd -U sa -P $${SA_PASSWORD} -Q "SELECT 1"
@@ -59,3 +59,5 @@ services:
       RabbitMqOptions__HostName: rabbitmq
       ASPNETCORE_ENVIRONMENT: Development
       HealthChecksUI__HealthChecks__0__Uri: http://app/health
+volumes:
+  sqlserver_data:
