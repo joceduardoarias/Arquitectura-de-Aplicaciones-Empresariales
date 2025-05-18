@@ -1,0 +1,61 @@
+version: '3.4'
+
+services:
+  sql1:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sql1
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Castillo2030*
+    volumes:
+      - ./restore_northwind.sql:/docker-entrypoint-initdb.d/restore_northwind.sql
+    healthcheck:
+      test: >-
+        /opt/mssql-tools/bin/sqlcmd -U sa -P $${SA_PASSWORD} -Q "SELECT 1"
+      interval: 10s
+      retries: 5
+
+  redis:
+    image: redis/redis-stack:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  app:
+    build:
+      context: .
+      dockerfile: ./Pacagroup.Ecommerce.Services.WebApi/Dockerfile
+    image: myappimage:latest        # o el nombre que prefieras
+    container_name: app
+    ports:
+      - "5001:8080"                      # ajusta según tu configuración
+    depends_on:
+      sql1:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    env_file:
+      - otel-dotnet.env            # tus variables de OpenTelemetry
+    environment:
+      ConnectionStrings__NorthwindConnection: >
+        Server=sql1,1433;
+        Database=Northwind;
+        User Id=sa;
+        Password=Castillo2030*;
+        TrustServerCertificate=True
+      ConnectionStrings__RedisConnection: "redis:6379,password=default,ssl=false,abortConnect=false"
+      RabbitMqOptions__HostName: rabbitmq
+      ASPNETCORE_ENVIRONMENT: Development
+      HealthChecksUI__HealthChecks__0__Uri: http://app/health
