@@ -35,10 +35,12 @@ services:
     build:
       context: .
       dockerfile: ./Pacagroup.Ecommerce.Services.WebApi/Dockerfile
-    image: myappimage:latest        # o el nombre que prefieras
+    image: myappimage:latest        
     container_name: app
     ports:
-      - "5001:8080"                      # ajusta según tu configuración
+      - "5001:8080"                          
+    labels:
+      logging: promtail
     depends_on:
       sql1:
         condition: service_healthy
@@ -47,7 +49,7 @@ services:
       rabbitmq:
         condition: service_started
     env_file:
-      - otel-dotnet.env            # tus variables de OpenTelemetry
+      - otel-dotnet.env              
     environment:
       ConnectionStrings__NorthwindConnection: >
         Server=sql1,1433;
@@ -61,3 +63,8 @@ services:
       HealthChecksUI__HealthChecks__0__Uri: http://app/health
 volumes:
   sqlserver_data:
+
+networks:
+  default:
+    external:
+      name: observabilidad
