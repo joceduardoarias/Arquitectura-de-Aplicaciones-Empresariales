@@ -18,6 +18,10 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ✅ Configurar logger para Loki (consola)
+builder.Logging.ClearProviders();
+builder.Logging.AddJsonConsole(); // Agregar el logger de consola format JSON para Loki
+
 // Servicios para creación de aplicaciones Web API
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
