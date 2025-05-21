@@ -65,4 +65,11 @@ public class UsersController : ControllerBase
         var tokenString = tokenHandler.WriteToken(token);
         return tokenString;
     }
+    
+    [AllowAnonymous]
+    [HttpGet("Test")]
+    public IActionResult Test()
+    {
+        return Ok(new { message = "API v2 UsersController is working." });
+    }
 }
