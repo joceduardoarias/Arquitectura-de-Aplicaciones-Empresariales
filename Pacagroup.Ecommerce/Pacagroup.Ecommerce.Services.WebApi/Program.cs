@@ -14,7 +14,7 @@ using Pacagroup.Ecommerce.Infrastructure;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Middleware;
 using Pacagroup.Ecommerce.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-
+using Pacagroup.Ecommerce.Services.WebApi.Modules.Instrumentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,8 +38,8 @@ builder.Services.AddInjection(builder.Configuration);
 builder.Services.AddAuthentication(builder.Configuration);
 // Register the swagger generator, defining 1 or more Swagger documents
 builder.Services.AddSwagger();
-// Configure HealthCheck
-//builder.Services.AddHealthCheck(builder.Configuration);
+//Registrar Opentelemetry para resgistrar trazas
+builder.Services.AddInstrumentation(builder.Configuration);
 
 // Register Redis
 builder.Services.AddRedisCache(builder.Configuration);
